@@ -1,0 +1,44 @@
+﻿using ColorMemory.DTO;
+using ColorMemory.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Text.Json;
+
+namespace ColorMemory.Controllers
+{
+    public partial class PlayerController
+    {
+        [HttpPost("artwork")]
+        public async Task<IActionResult> UpdatePlayerArtworkAsync([FromBody] PlayerArtworkDTO playerArtworkInfo)
+        {
+            var result = await _artworkService.UpdatePlayerArtworkAsync(playerArtworkInfo);
+
+            if (result == null)
+                return BadRequest(new
+                {
+                    Message = "Artwork could not be added.",
+                    Reason = "The artwork might already be owned by the player or does not exist."
+                });
+
+            _logger.LogInformation($"updated {playerArtworkInfo.Title} to {playerArtworkInfo.PlayerId}");
+            return Ok(new { rank = result.ToString() });
+        }
+
+        [HttpGet("{playerId}/artworks/owned")]
+        public async Task<IActionResult> GetPlayerArtworksAsync(string playerId)
+        {
+            var artworks = await _artworkService.GetOwnedArtworksAsync(playerId);
+
+            return Ok(artworks);
+        }
+
+        [HttpGet("{playerId}/artworks/unowned")]
+        public async Task<IActionResult> GetPlayerUnownedArtworksAsync(string playerId)
+        {
+            var artworks = await _artworkService.GetUnownedArtworksAsync(playerId);
+
+            return Ok(artworks);
+        }
+    }
+}
