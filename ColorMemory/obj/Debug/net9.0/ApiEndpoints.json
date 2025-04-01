@@ -49,6 +49,43 @@
   },
   {
     "ContainingType": "ColorMemory.Controllers.PlayerController",
+    "Method": "GetPlayerIconIdAsync",
+    "RelativePath": "api/player/{playerId}/icon",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playerId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ColorMemory.Controllers.PlayerController",
+    "Method": "SetPlayerIconIdAsync",
+    "RelativePath": "api/player/{playerId}/icon/{iconId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playerId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "iconId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ColorMemory.Controllers.PlayerController",
     "Method": "GetPlayerMoneyAsync",
     "RelativePath": "api/player/{playerId}/money",
     "HttpMethod": "GET",
@@ -186,8 +223,24 @@
   },
   {
     "ContainingType": "ColorMemory.Controllers.PlayerController",
+    "Method": "ObtainPlayerArtworkAsync",
+    "RelativePath": "api/player/artwork/obtain",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playerArtworkInfo",
+        "Type": "ColorMemory.DTO.PlayerArtworkDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ColorMemory.Controllers.PlayerController",
     "Method": "UpdatePlayerArtworkAsync",
-    "RelativePath": "api/player/artwork",
+    "RelativePath": "api/player/artwork/update",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

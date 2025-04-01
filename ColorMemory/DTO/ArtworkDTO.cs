@@ -46,32 +46,36 @@ namespace ColorMemory.DTO
 
     public class PlayerArtworkDTO : ArtworkDTO
     {
-        public int TotalMoveCount { get; set; }
+        public int TotalMistakesAndHints { get; set; }
 
-        public Dictionary<int, int> Moves { get; set; }
+        public Dictionary<int, int> HintUsagePerStage { get; set; }
+        public Dictionary<int, int> IncorrectPerStage { get; set; }
 
         public Rank Rank { get; set; }
-
         public bool HasIt { get; set; }
+        public DateTime? ObtainedDate { get; set; }
 
         public PlayerArtworkDTO() { }
 
-        public PlayerArtworkDTO(string playerId, int artworkId, string title, string artist, int totalMoveCount, Dictionary<int, int> moves, Rank rank, bool hasIt)
+        public PlayerArtworkDTO(string playerId, int artworkId, string title, string artist, int totalMistakesAndHints, Dictionary<int, int> hintUsagePerStage, Dictionary<int, int> incorrectPerStage, Rank rank, bool hasIt, DateTime? obtainedDate)
             : base(playerId, artworkId, title, artist)
         {
-            TotalMoveCount = totalMoveCount;
-            Moves = moves;
+            TotalMistakesAndHints = totalMistakesAndHints;
+            HintUsagePerStage = hintUsagePerStage;
+            IncorrectPerStage = incorrectPerStage;
             Rank = rank;
             HasIt = hasIt;
+            ObtainedDate = obtainedDate;
         }
 
-        public PlayerArtworkDTO(ArtworkDTO artworkDTO, int totalMoveCount, Dictionary<int, int> moves, Rank rank, bool hasIt)
+        public PlayerArtworkDTO(ArtworkDTO artworkDTO, int totalMistakesAndHints, Dictionary<int, int> hintUsagePerStage, Dictionary<int, int> incorrectPerStage, Rank rank, bool hasIt, DateTime? obtainedDate)
         : base(artworkDTO.PlayerId, artworkDTO.ArtworkId, artworkDTO.Title, artworkDTO.Artist)
         {
-            TotalMoveCount = totalMoveCount;
-            Moves = moves;
-            Rank = rank;
+            TotalMistakesAndHints = totalMistakesAndHints;
+            HintUsagePerStage = hintUsagePerStage;
+            IncorrectPerStage = incorrectPerStage; Rank = rank;
             HasIt = hasIt;
+            ObtainedDate = obtainedDate;
         }
     }
 }

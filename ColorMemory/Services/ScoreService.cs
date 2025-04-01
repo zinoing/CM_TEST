@@ -40,17 +40,17 @@ namespace ColorMemory.Services
             return await _nationalRankingDb.GetScoreAsyncById(playerId);
         }
 
-        public async Task<List<ScoreDTO>> GetTopWeeklyScoresAsync(int count)
+        public async Task<List<PlayerScoreDTO>> GetTopWeeklyScoresAsync(int count)
         {
             return await _weeklyRankingDb.GetTopRanksAsync(count);
         }
 
-        public async Task<List<ScoreDTO>> GetTopNationalScoresAsync(int count)
+        public async Task<List<PlayerScoreDTO>> GetTopNationalScoresAsync(int count)
         {
             return await _nationalRankingDb.GetTopRanksAsync(count);
         }
 
-        public async Task<List<ScoreDTO>> GetSurroundingWeeklyScoresAsync(string playerId, int range)
+        public async Task<List<PlayerScoreDTO>> GetSurroundingWeeklyScoresAsync(string playerId, int range)
         {
             return await _weeklyRankingDb.GetSurroundingWeeklyScoresAsync(playerId, range);
         }

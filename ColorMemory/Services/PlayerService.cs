@@ -33,6 +33,13 @@ namespace ColorMemory.Services
             return name;
         }
 
+        public async Task<string> GetIconIdAsync(string playerId)
+        {
+            var name = await _playerDb.GetIconIdAsync(playerId);
+
+            return name;
+        }
+
         public async Task<int> GetScoreAsync(string playerId)
         {
             var score = await _playerDb.GetScoreAsync(playerId);
@@ -45,6 +52,13 @@ namespace ColorMemory.Services
             var money = await _playerDb.GetMoneyAsync(playerId);
 
             return money;
+        }
+
+        public async Task<bool> SetIconIdAsync(string playerId, string iconId)
+        {
+            var result = await _playerDb.SetIconIdAsync(playerId, iconId);
+
+            return result;
         }
     }
 }

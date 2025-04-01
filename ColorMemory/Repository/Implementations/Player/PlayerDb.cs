@@ -57,6 +57,7 @@ namespace ColorMemory.Repository.Implementations
             {
                 PlayerId = playerInfo.PlayerId,
                 Name = playerInfo.Name,
+                IconId = playerInfo.IconId,
                 Score = playerInfo.Score,
                 Money = playerInfo.Money,
                 PlayerArtworks = new List<PlayerArtwork>()
@@ -66,7 +67,8 @@ namespace ColorMemory.Repository.Implementations
 
             foreach (var artwork in artworks)
             {
-                var moveDict = Enumerable.Range(1, 16).ToDictionary(i => i, i => 0);
+                var hintUsagePerStage = Enumerable.Range(1, 16).ToDictionary(i => i, i => 0);
+                var incorrectPerStage = Enumerable.Range(1, 16).ToDictionary(i => i, i => 0);
 
                 var newPlayerArtwork = new PlayerArtwork
                 {
@@ -76,8 +78,9 @@ namespace ColorMemory.Repository.Implementations
                     Artwork = artwork,
                     Rank = Rank.NONE,
                     HasIt = false,
-                    TotalMoveCnt = 0,
-                    Moves = JsonConvert.SerializeObject(moveDict)
+                    TotalMistakesAndHints = 0,
+                    HintUsagePerStage = JsonConvert.SerializeObject(hintUsagePerStage),
+                    IncorrectPerStage = JsonConvert.SerializeObject(incorrectPerStage)
                 };
 
                 _context.PlayerArtworks.Add(newPlayerArtwork);
@@ -138,6 +141,19 @@ namespace ColorMemory.Repository.Implementations
             }
         }
 
+        public async Task<string> GetIconIdAsync(string playerId)
+        {
+            Player player = await FindPlayerAsync(playerId);
+            if (player != null)
+            {
+                return player.IconId;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
         public async Task<int> GetScoreAsync(string playerId)
         {
             Player player = await FindPlayerAsync(playerId);
@@ -165,6 +181,20 @@ namespace ColorMemory.Repository.Implementations
         }
 
         // set functions
+        public async Task<bool> SetIconIdAsync(string playerId, string iconId)
+        {
+            var player = await FindPlayerInRDSAsync(playerId);
+            if (player == null) return false;
+
+            player.IconId = iconId;
+            await _context.SaveChangesAsync();
+
+            string redisKey = $"player:{playerId}";
+            await _database.HashSetAsync(redisKey, "IconId", iconId);
+
+            return true;
+        }
+
         public async Task<bool> SetScoreAsync(string playerId, int newScore)
         {
             var player = await FindPlayerInRDSAsync(playerId);

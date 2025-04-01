@@ -22,6 +22,7 @@ namespace ColorMemory.Repository.Implementations
             [
                 new HashEntry("PlayerId", player.PlayerId),
                 new HashEntry("Name", player.Name),
+                new HashEntry("IconId", player.IconId),
                 new HashEntry("Score", player.Score),
                 new HashEntry("Money", player.Money)
             ];
@@ -38,6 +39,7 @@ namespace ColorMemory.Repository.Implementations
             {
                 PlayerId = dict.GetValueOrDefault("PlayerId"),
                 Name = dict.GetValueOrDefault("Name"),
+                IconId = dict.GetValueOrDefault("IconId", "default"),
                 Score = int.Parse(dict.GetValueOrDefault("Score", "0")),
                 Money = int.Parse(dict.GetValueOrDefault("Money", "0"))
             };

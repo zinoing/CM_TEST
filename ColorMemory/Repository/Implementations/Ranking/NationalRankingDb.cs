@@ -1,10 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ColorMemory.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace ColorMemory.Repository.Implementations
 {
     public class NationalRankingDb : BaseRankingDb
     {
-        public NationalRankingDb(ILogger<NationalRankingDb> logger, IConfiguration configuration)
-            : base(logger, configuration, "national_rankings") { }
+        public NationalRankingDb(PlayerService playerService, ILogger<NationalRankingDb> logger, IConfiguration configuration)
+            : base(playerService, logger, configuration, "national_rankings") { }
     }
 }

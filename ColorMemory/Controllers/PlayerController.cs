@@ -4,6 +4,7 @@ using ColorMemory.Repository.Implementations;
 using ColorMemory.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace ColorMemory.Controllers
 {
@@ -105,6 +106,29 @@ namespace ColorMemory.Controllers
             {
                 _logger.LogError(ex, "Error updating hint");
                 return StatusCode(500, new { error = ex.Message });
+            }
+        }
+
+        [HttpGet("{playerId}/icon")]
+        public async Task<IActionResult> GetPlayerIconIdAsync(string playerId)
+        {
+            var iconId = await _playerService.GetIconIdAsync(playerId);
+            return Ok(iconId);
+        }
+
+        [HttpPost("{playerId}/icon/{iconId}")]
+        public async Task<IActionResult> SetPlayerIconIdAsync(string playerId, string iconId)
+        {
+            var result = await _playerService.SetIconIdAsync(playerId, iconId);
+            if (result)
+            {
+                _logger.LogInformation($"Updated {playerId}'s icon to {iconId}");
+                return Ok(iconId);  // Return the updated icon ID if successful
+            }
+            else
+            {
+                _logger.LogWarning($"Failed to update {playerId}'s icon.");
+                return StatusCode(500, new { error = "Failed to update the icon." });
             }
         }
     }
