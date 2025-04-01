@@ -14,7 +14,7 @@ namespace ColorMemory.DTO
 
         public PlayerDTO() { }
 
-        public PlayerDTO(string playerId, string name, string iconId, int score, int money) : base(playerId)
+        public PlayerDTO(string playerId, string name, string iconId = "default", int score = 0, int money = 0) : base(playerId)
         {
             Name = name;
             IconId = iconId;
