@@ -15,11 +15,11 @@ namespace ColorMemory.DTO
 
     public class PlayerScoreDTO : ScoreDTO
     {
-        public string IconId { get; set; }
+        public int IconId { get; set; }
         public string Name { get; set; }
 
         public PlayerScoreDTO() { }
-        public PlayerScoreDTO(string playerId, string name, string iconId, int score) : base(playerId, score)
+        public PlayerScoreDTO(string playerId, string name, int iconId, int score) : base(playerId, score)
         {
             IconId = iconId;
             Name = name;

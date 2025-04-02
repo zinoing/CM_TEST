@@ -40,10 +40,18 @@ namespace ColorMemory.Controllers
         }
 
         [HttpGet("{playerId}/score/weekly")]
-        public async Task<IActionResult> GetPlayerWeeklyScoreAsync(string playerId)
+        public async Task<IActionResult> GetPlayerWeeklyScoreAsync(string playerId, [FromQuery] string type)
         {
-            var scores = await _scoreService.GetWeeklyScoreAsync(playerId);
-            return Ok(scores);
+            if (type == "int")
+            {
+                var scores = await _scoreService.GetWeeklyScoreAsIntAsync(playerId);
+                return Ok(scores);
+            }
+            else
+            {
+                var playerScore = await _scoreService.GetWeeklyScoreAsDTOAsync(playerId);
+                return Ok(playerScore);
+            }
         }
 
         [HttpGet("{playerId}/score/national")]
@@ -58,6 +66,13 @@ namespace ColorMemory.Controllers
         {
             var scores = await _scoreService.GetSurroundingWeeklyScoresAsync(playerId, range);
             return Ok(scores);
+        }
+
+        [HttpGet("{playerId}/ranking/weekly")]
+        public async Task<IActionResult> GetPlayerWeeklyRankingAsync(string playerId)
+        {
+            int rank = await _scoreService.GetPlayerWeeklyRankingAsync(playerId);
+            return Ok(rank);
         }
     }
 }

@@ -52,11 +52,10 @@ namespace ColorMemory.Migrations
                     b.Property<string>("PlayerId")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("IconId")
-                        .IsRequired()
+                    b.Property<int>("IconId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("longtext")
-                        .HasDefaultValue("default");
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<int>("Money")
                         .ValueGeneratedOnAdd()
@@ -90,19 +89,15 @@ namespace ColorMemory.Migrations
                         .HasColumnType("tinyint(1)")
                         .HasDefaultValue(false);
 
-                    b.Property<string>("HintUsagePerStage")
-                        .IsRequired()
-                        .HasColumnType("json");
-
-                    b.Property<string>("IncorrectPerStage")
-                        .IsRequired()
-                        .HasColumnType("json");
-
                     b.Property<DateTime?>("ObtainedDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("Rank")
                         .HasColumnType("int");
+
+                    b.Property<string>("Stages")
+                        .IsRequired()
+                        .HasColumnType("json");
 
                     b.Property<int>("TotalMistakesAndHints")
                         .ValueGeneratedOnAdd()

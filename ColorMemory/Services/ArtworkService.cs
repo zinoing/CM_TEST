@@ -57,6 +57,43 @@ namespace ColorMemory.Services
             return artwork;
         }
 
+        private Dictionary<int, StageDTO> CalculateRankPerStage(Dictionary<int, StageDTO> stages)
+        {
+            for (int i = 1; i <= stages.Count; i++)
+            {
+                if (stages[i] == null) continue;
+
+                var newRank = (stages[i].HintUsage + stages[i].IncorrectCnt) switch
+                {
+                    <= 1 => Rank.GOLD,
+                    <= 2 => Rank.SILVER,
+                    _ => Rank.COPPER
+                };
+
+                stages[i].Rank = newRank;
+            }
+
+            return stages;
+        }
+
+        private Dictionary<int, StageDTO> UpdateStagesWithBetterPerformance(Dictionary<int, StageDTO> previousStages, Dictionary<int, StageDTO> newStages)
+        {
+            Dictionary<int, StageDTO> updatedStages = new Dictionary<int, StageDTO>();
+            for (int i = 1; i <= previousStages.Count; i++)
+            {
+                if (previousStages[i].HintUsage + previousStages[i].IncorrectCnt > newStages[i].HintUsage + newStages[i].IncorrectCnt)
+                {
+                    updatedStages.Add(i, newStages[i]);
+                }
+                else
+                {
+                    updatedStages.Add(i, previousStages[i]);
+                }
+            }
+
+            return updatedStages;
+        }
+
         public async Task<Rank?> ObtainPlayerArtworkAsync(PlayerArtworkDTO playerArtworkInfo)
         {
             int artworkId = playerArtworkInfo.ArtworkId;
@@ -78,10 +115,11 @@ namespace ColorMemory.Services
                 .FirstOrDefault(pa => pa.ArtworkId == artworkId);
 
             Rank newRank = Rank.NONE;
+            var updatedStage = CalculateRankPerStage(playerArtworkInfo.Stages);
 
             if (existingEntry == null)
             {
-                // 아직 이 아트워크를 아예 안 가진 상태 — 새로 추가
+                // 아직 이 아트워크를 아예 안 가진 상태
                 newRank = playerArtworkInfo.TotalMistakesAndHints switch
                 {
                     <= 16 => Rank.GOLD,
@@ -97,15 +135,14 @@ namespace ColorMemory.Services
                     HasIt = true,
                     ObtainedDate = DateTime.Now,
                     TotalMistakesAndHints = playerArtworkInfo.TotalMistakesAndHints,
-                    HintUsagePerStage = JsonConvert.SerializeObject(playerArtworkInfo.HintUsagePerStage),
-                    IncorrectPerStage = JsonConvert.SerializeObject(playerArtworkInfo.IncorrectPerStage),
+                    Stages = JsonConvert.SerializeObject(updatedStage)
                 };
 
                 player.PlayerArtworks.Add(newPlayerArtwork);
             }
             else if (!existingEntry.HasIt)
             {
-                // 이미 같은 키의 객체가 있으나 HasIt이 false인 경우 → 값만 업데이트
+                // 이미 같은 키의 객체가 있으나 HasIt이 false인 경우
                 newRank = playerArtworkInfo.TotalMistakesAndHints switch
                 {
                     <= 16 => Rank.GOLD,
@@ -117,8 +154,7 @@ namespace ColorMemory.Services
                 existingEntry.HasIt = true;
                 existingEntry.ObtainedDate = DateTime.Now;
                 existingEntry.TotalMistakesAndHints = playerArtworkInfo.TotalMistakesAndHints;
-                existingEntry.HintUsagePerStage = JsonConvert.SerializeObject(playerArtworkInfo.HintUsagePerStage);
-                existingEntry.IncorrectPerStage = JsonConvert.SerializeObject(playerArtworkInfo.IncorrectPerStage);
+                existingEntry.Stages = JsonConvert.SerializeObject(updatedStage);
             }
 
             await _context.SaveChangesAsync();
@@ -148,6 +184,8 @@ namespace ColorMemory.Services
             if (existingEntry == null) return null;
 
             Rank updatedRank = Rank.NONE;
+            var updatedStage = UpdateStagesWithBetterPerformance(playerArtworkInfo.Stages, JsonConvert.DeserializeObject<Dictionary<int, StageDTO>>(existingEntry.Stages));
+            updatedStage = CalculateRankPerStage(updatedStage);
 
             if (existingEntry.HasIt == false)
             {
@@ -165,8 +203,7 @@ namespace ColorMemory.Services
                     existingEntry.HasIt = true;
                     existingEntry.ObtainedDate = DateTime.Now;
                     existingEntry.TotalMistakesAndHints = playerArtworkInfo.TotalMistakesAndHints;
-                    existingEntry.HintUsagePerStage = JsonConvert.SerializeObject(playerArtworkInfo.HintUsagePerStage);
-                    existingEntry.IncorrectPerStage = JsonConvert.SerializeObject(playerArtworkInfo.IncorrectPerStage);
+                    existingEntry.Stages = JsonConvert.SerializeObject(updatedStage);
                 }
                 // 여전히 가지지 못한 상태
                 else
@@ -175,8 +212,7 @@ namespace ColorMemory.Services
                     existingEntry.HasIt = false;
                     existingEntry.ObtainedDate = null;
                     existingEntry.TotalMistakesAndHints = playerArtworkInfo.TotalMistakesAndHints;
-                    existingEntry.HintUsagePerStage = JsonConvert.SerializeObject(playerArtworkInfo.HintUsagePerStage);
-                    existingEntry.IncorrectPerStage = JsonConvert.SerializeObject(playerArtworkInfo.IncorrectPerStage);
+                    existingEntry.Stages = JsonConvert.SerializeObject(updatedStage);
                 }
             }
             else {
@@ -195,15 +231,13 @@ namespace ColorMemory.Services
                     existingEntry.HasIt = true;
                     existingEntry.ObtainedDate = DateTime.Now;
                     existingEntry.TotalMistakesAndHints = playerArtworkInfo.TotalMistakesAndHints;
-                    existingEntry.HintUsagePerStage = JsonConvert.SerializeObject(playerArtworkInfo.HintUsagePerStage);
-                    existingEntry.IncorrectPerStage = JsonConvert.SerializeObject(playerArtworkInfo.IncorrectPerStage);
+                    existingEntry.Stages = JsonConvert.SerializeObject(updatedStage);
                 }
                 else
                 {
                     existingEntry.HasIt = true;
                     existingEntry.TotalMistakesAndHints = playerArtworkInfo.TotalMistakesAndHints;
-                    existingEntry.HintUsagePerStage = JsonConvert.SerializeObject(playerArtworkInfo.HintUsagePerStage);
-                    existingEntry.IncorrectPerStage = JsonConvert.SerializeObject(playerArtworkInfo.IncorrectPerStage);
+                    existingEntry.Stages = JsonConvert.SerializeObject(updatedStage);
                 }
             }
             await _context.SaveChangesAsync();
@@ -231,8 +265,7 @@ namespace ColorMemory.Services
                     title: pa.Artwork.Title,
                     artist: pa.Artwork.Artist,
                     totalMistakesAndHints: pa.TotalMistakesAndHints,
-                    hintUsagePerStage: JsonConvert.DeserializeObject<Dictionary<int, int>>(pa.HintUsagePerStage),
-                    incorrectPerStage: JsonConvert.DeserializeObject<Dictionary<int, int>>(pa.IncorrectPerStage),
+                    stages: JsonConvert.DeserializeObject<Dictionary<int, StageDTO>>(pa.Stages),
                     rank: pa.Rank,
                     hasIt: pa.HasIt,
                     obtainedDate: pa.ObtainedDate
@@ -264,8 +297,7 @@ namespace ColorMemory.Services
                     title: pa.Artwork.Title,
                     artist: pa.Artwork.Artist,
                     totalMistakesAndHints: 0,
-                    hintUsagePerStage: JsonConvert.DeserializeObject<Dictionary<int, int>>(pa.HintUsagePerStage),
-                    incorrectPerStage: JsonConvert.DeserializeObject<Dictionary<int, int>>(pa.IncorrectPerStage),
+                    stages: JsonConvert.DeserializeObject<Dictionary<int, StageDTO>>(pa.Stages),
                     rank: pa.Rank,
                     hasIt: pa.HasIt,
                     obtainedDate: null

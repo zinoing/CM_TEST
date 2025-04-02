@@ -39,7 +39,7 @@ namespace ColorMemory.Repository.Implementations
             {
                 PlayerId = dict.GetValueOrDefault("PlayerId"),
                 Name = dict.GetValueOrDefault("Name"),
-                IconId = dict.GetValueOrDefault("IconId", "default"),
+                IconId = int.Parse(dict.GetValueOrDefault("IconId", "0")),
                 Score = int.Parse(dict.GetValueOrDefault("Score", "0")),
                 Money = int.Parse(dict.GetValueOrDefault("Money", "0"))
             };

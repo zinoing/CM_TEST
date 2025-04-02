@@ -6,7 +6,7 @@ namespace ColorMemory.DTO
     {
         [Required]
         public string Name { get; set; }
-        public string IconId { get; set; }
+        public int IconId { get; set; }
 
         public int Score { get; set; }
 
@@ -14,7 +14,7 @@ namespace ColorMemory.DTO
 
         public PlayerDTO() { }
 
-        public PlayerDTO(string playerId, string name, string iconId = "default", int score = 0, int money = 0) : base(playerId)
+        public PlayerDTO(string playerId, string name, int iconId = 0, int score = 0, int money = 0) : base(playerId)
         {
             Name = name;
             IconId = iconId;

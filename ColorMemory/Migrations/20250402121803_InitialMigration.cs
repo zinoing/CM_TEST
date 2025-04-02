@@ -42,8 +42,7 @@ namespace ColorMemory.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    IconId = table.Column<string>(type: "longtext", nullable: false, defaultValue: "default")
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IconId = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Score = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Money = table.Column<int>(type: "int", nullable: false, defaultValue: 0)
                 },
@@ -61,9 +60,7 @@ namespace ColorMemory.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ArtworkId = table.Column<int>(type: "int", nullable: false),
                     TotalMistakesAndHints = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    HintUsagePerStage = table.Column<string>(type: "json", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IncorrectPerStage = table.Column<string>(type: "json", nullable: false)
+                    Stages = table.Column<string>(type: "json", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Rank = table.Column<int>(type: "int", nullable: false),
                     HasIt = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),

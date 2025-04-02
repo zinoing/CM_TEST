@@ -15,7 +15,7 @@ namespace ColorMemory.Data
         public string PlayerId { get; set; }
         public string Name { get; set; }
 
-        public string IconId { get; set; }
+        public int IconId { get; set; }
         public int Score { get; set; }
         public int Money { get; set; }
         public ICollection<PlayerArtwork> PlayerArtworks { get; set; } = new List<PlayerArtwork>();
@@ -44,15 +44,16 @@ namespace ColorMemory.Data
         [Required]
         public Artwork Artwork { get; set; }
         public int TotalMistakesAndHints { get; set; }
+
         [Required]
         [Column(TypeName = "json")]
-        public string HintUsagePerStage { get; set; } = JsonConvert.SerializeObject(
-            Enumerable.Range(1, 16).ToDictionary(i => i, i => 0)
-        );
-        [Required]
-        [Column(TypeName = "json")]
-        public string IncorrectPerStage { get; set; } = JsonConvert.SerializeObject(
-            Enumerable.Range(1, 16).ToDictionary(i => i, i => 0)
+        public string Stages { get; set; } = JsonConvert.SerializeObject(
+            Enumerable.Range(1, 16).ToDictionary(i => i, i => new StageDTO
+            {
+                Rank = Rank.NONE,
+                HintUsage = 0,
+                IncorrectCnt = 0
+            })
         );
         public Rank Rank { get; set; }
         public bool HasIt { get; set; } = false;
@@ -78,7 +79,7 @@ namespace ColorMemory.Data
                 entity.HasKey(p => p.PlayerId);
 
                 entity.Property(p => p.Name).IsRequired();
-                entity.Property(p => p.IconId).HasDefaultValue("default");
+                entity.Property(p => p.IconId).HasDefaultValue(0);
                 entity.Property(p => p.Score).HasDefaultValue(0);
                 entity.Property(p => p.Money).HasDefaultValue(0);
 
@@ -105,20 +106,23 @@ namespace ColorMemory.Data
                       .HasForeignKey(pa => pa.ArtworkId);
 
                 entity.Property(pa => pa.TotalMistakesAndHints).HasDefaultValue(0);
-                entity.Property(pa => pa.HintUsagePerStage)
-                      .IsRequired()
-                      .HasColumnType("json");
-                entity.Property(pa => pa.IncorrectPerStage)
+
+                entity.Property(pa => pa.Stages)
                       .IsRequired()
                       .HasColumnType("json");
 
-                entity.Property(pa => pa.Rank).HasConversion<int>();
-                entity.Property(pa => pa.HasIt).HasDefaultValue(false);
+                entity.Property(pa => pa.Rank)
+                      .HasConversion<int>();
+
+                entity.Property(pa => pa.HasIt)
+                      .HasDefaultValue(false);
+
                 entity.Property(pa => pa.ObtainedDate)
-                    .IsRequired(false)
-                    .HasDefaultValueSql(null);
+                      .IsRequired(false)
+                      .HasDefaultValueSql(null);
             });
         }
+
 
     }
 }

@@ -44,12 +44,27 @@ namespace ColorMemory.DTO
         GOLD,
     }
 
+    public class StageDTO
+    {
+        public Rank Rank { get; set; }
+        public int HintUsage { get; set; }
+        public int IncorrectCnt { get; set; }
+
+        public StageDTO() { }
+
+        public StageDTO(Rank rank, int hintUsage, int incorrectCnt)
+        {
+            Rank = rank;
+            HintUsage = hintUsage;
+            IncorrectCnt = incorrectCnt;
+        }
+    }
+
     public class PlayerArtworkDTO : ArtworkDTO
     {
         public int TotalMistakesAndHints { get; set; }
 
-        public Dictionary<int, int> HintUsagePerStage { get; set; }
-        public Dictionary<int, int> IncorrectPerStage { get; set; }
+        public Dictionary<int, StageDTO> Stages { get; set; }
 
         public Rank Rank { get; set; }
         public bool HasIt { get; set; }
@@ -57,23 +72,22 @@ namespace ColorMemory.DTO
 
         public PlayerArtworkDTO() { }
 
-        public PlayerArtworkDTO(string playerId, int artworkId, string title, string artist, int totalMistakesAndHints, Dictionary<int, int> hintUsagePerStage, Dictionary<int, int> incorrectPerStage, Rank rank, bool hasIt, DateTime? obtainedDate)
+        public PlayerArtworkDTO(string playerId, int artworkId, string title, string artist, int totalMistakesAndHints, Dictionary<int, StageDTO> stages, Rank rank, bool hasIt, DateTime? obtainedDate)
             : base(playerId, artworkId, title, artist)
         {
             TotalMistakesAndHints = totalMistakesAndHints;
-            HintUsagePerStage = hintUsagePerStage;
-            IncorrectPerStage = incorrectPerStage;
+            Stages = stages;
             Rank = rank;
             HasIt = hasIt;
             ObtainedDate = obtainedDate;
         }
 
-        public PlayerArtworkDTO(ArtworkDTO artworkDTO, int totalMistakesAndHints, Dictionary<int, int> hintUsagePerStage, Dictionary<int, int> incorrectPerStage, Rank rank, bool hasIt, DateTime? obtainedDate)
+        public PlayerArtworkDTO(ArtworkDTO artworkDTO, int totalMistakesAndHints, Dictionary<int, StageDTO> stages, Rank rank, bool hasIt, DateTime? obtainedDate)
         : base(artworkDTO.PlayerId, artworkDTO.ArtworkId, artworkDTO.Title, artworkDTO.Artist)
         {
             TotalMistakesAndHints = totalMistakesAndHints;
-            HintUsagePerStage = hintUsagePerStage;
-            IncorrectPerStage = incorrectPerStage; Rank = rank;
+            Stages = stages;
+            Rank = rank;
             HasIt = hasIt;
             ObtainedDate = obtainedDate;
         }

@@ -16,6 +16,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ColorMemory.Controllers.HintController",
+    "Method": "GetHintPriceAsync",
+    "RelativePath": "api/hint/price",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "type",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ColorMemory.Controllers.PlayerController",
     "Method": "GetPlayerArtworksAsync",
     "RelativePath": "api/player/{playerId}/artworks/owned",
@@ -78,7 +94,7 @@
       },
       {
         "Name": "iconId",
-        "Type": "System.String",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -154,6 +170,22 @@
   },
   {
     "ContainingType": "ColorMemory.Controllers.PlayerController",
+    "Method": "GetPlayerWeeklyRankingAsync",
+    "RelativePath": "api/player/{playerId}/ranking/weekly",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playerId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ColorMemory.Controllers.PlayerController",
     "Method": "GetPlayerNationalScoreAsync",
     "RelativePath": "api/player/{playerId}/score/national",
     "HttpMethod": "GET",
@@ -180,6 +212,11 @@
         "Name": "playerId",
         "Type": "System.String",
         "IsRequired": true
+      },
+      {
+        "Name": "type",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

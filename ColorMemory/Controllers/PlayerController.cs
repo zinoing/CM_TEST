@@ -117,7 +117,7 @@ namespace ColorMemory.Controllers
         }
 
         [HttpPost("{playerId}/icon/{iconId}")]
-        public async Task<IActionResult> SetPlayerIconIdAsync(string playerId, string iconId)
+        public async Task<IActionResult> SetPlayerIconIdAsync(string playerId, int iconId)
         {
             var result = await _playerService.SetIconIdAsync(playerId, iconId);
             if (result)

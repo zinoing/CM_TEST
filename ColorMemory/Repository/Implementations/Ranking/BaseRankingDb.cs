@@ -24,10 +24,14 @@ namespace ColorMemory.Repository.Implementations
             await _database.SortedSetAddAsync(_key, id, score);
         }
 
-        public async Task<double?> GetScoreAsyncById(string userId)
+        public async Task<int?> GetScoreAsIntAsyncById(string userId)
         {
             var score = await _database.SortedSetScoreAsync(_key, userId);
-            return score.HasValue ? score.Value : null;
+            if (score.HasValue)
+            {
+                return (int?)score.Value;
+            }
+            return null;
         }
 
         public async Task<long?> GetRankAsyncById(string userId)
@@ -45,8 +49,8 @@ namespace ColorMemory.Repository.Implementations
             foreach (var score in topScores)
             {
                 string name = await _playerService.GetNameAsync(score.Element.ToString());
-                string IconId = await _playerService.GetIconIdAsync(score.Element.ToString());
-                playerScores.Add(new PlayerScoreDTO(score.Element, name, IconId, (int)score.Score));
+                int iconId = await _playerService.GetIconIdAsync(score.Element.ToString());
+                playerScores.Add(new PlayerScoreDTO(score.Element, name, iconId, (int)score.Score));
             }
 
             return playerScores;
@@ -69,8 +73,8 @@ namespace ColorMemory.Repository.Implementations
             foreach (var score in surroundingScores)
             {
                 string name = await _playerService.GetNameAsync(score.Element.ToString());
-                string IconId = await _playerService.GetIconIdAsync(score.Element.ToString());
-                playerScores.Add(new PlayerScoreDTO(score.Element, name, IconId, (int)score.Score));
+                int iconId = await _playerService.GetIconIdAsync(score.Element.ToString());
+                playerScores.Add(new PlayerScoreDTO(score.Element, name, iconId, (int)score.Score));
             }
 
             return playerScores;

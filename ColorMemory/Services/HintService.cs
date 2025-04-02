@@ -2,6 +2,7 @@
 using ColorMemory.DTO;
 using ColorMemory.Repository.Implementations;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Eventing.Reader;
 
 namespace ColorMemory.Services
 {
@@ -13,6 +14,19 @@ namespace ColorMemory.Services
         {
             _playerDb = playerDb;
             _moneyService = moneyService;
+        }
+
+        public int GetHintPrice(HintType type)
+        {
+            switch (type)
+            {
+                case HintType.OneColorHint:
+                    return 100;
+                case HintType.OneZoneHint:
+                    return 50;
+                default:
+                    return -1;
+            }
         }
 
         public async Task<bool> BuyPlayerHintAsync(HintDTO hintInfo)
