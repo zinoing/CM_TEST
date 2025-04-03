@@ -54,8 +54,8 @@ namespace ColorMemory.Data
             {
                 IsLock = true,
                 Rank = Rank.NONE,
-                HintUsage = 0,
-                IncorrectCnt = 0
+                HintUsage = -1,
+                IncorrectCnt = -1
             })
         );
         public Rank Rank { get; set; }

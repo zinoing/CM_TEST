@@ -89,6 +89,12 @@ namespace ColorMemory.Services
                     continue;
                 }
 
+                if (previousStages[i].HintUsage == -1 || previousStages[i].IncorrectCnt == -1)
+                {
+                    updatedStages.Add(i, newStages[i]);
+                    continue;
+                }
+
                 if (previousStages[i].HintUsage + previousStages[i].IncorrectCnt > newStages[i].HintUsage + newStages[i].IncorrectCnt)
                 {
                     updatedStages.Add(i, newStages[i]);

@@ -72,8 +72,8 @@ namespace ColorMemory.Repository.Implementations
                 {
                     IsLock = true,
                     Rank = Rank.NONE,
-                    HintUsage = 0,
-                    IncorrectCnt = 0
+                    HintUsage = -1,
+                    IncorrectCnt = -1
                 });
 
                 stages[1].IsLock = false;
