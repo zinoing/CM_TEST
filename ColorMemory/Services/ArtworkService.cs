@@ -155,16 +155,16 @@ namespace ColorMemory.Services
 
             if (existingEntry.HasIt == false)
             {
-                updatedRank = playerArtworkInfo.TotalMistakesAndHints switch
-                {
-                    <= 16 => Rank.GOLD,
-                    <= 32 => Rank.SILVER,
-                    _ => Rank.COPPER
-                };
-
                 // 해당 artwork를 현재 player가 새롭게 가진 상태
                 if (playerArtworkInfo.HasIt)
                 {
+                    updatedRank = playerArtworkInfo.TotalMistakesAndHints switch
+                    {
+                        <= 16 => Rank.GOLD,
+                        <= 32 => Rank.SILVER,
+                        _ => Rank.COPPER
+                    };
+
                     existingEntry.Rank = updatedRank;
                     existingEntry.HasIt = true;
                     existingEntry.ObtainedDate = DateTime.Now;
@@ -197,6 +197,13 @@ namespace ColorMemory.Services
                 // 랭크가 변화되었다면 갱신
                 if(updatedRank > existingEntry.Rank)
                 {
+                    updatedRank = playerArtworkInfo.TotalMistakesAndHints switch
+                    {
+                        <= 16 => Rank.GOLD,
+                        <= 32 => Rank.SILVER,
+                        _ => Rank.COPPER
+                    };
+
                     existingEntry.Rank = updatedRank;
                     existingEntry.HasIt = true;
                     existingEntry.ObtainedDate = DateTime.Now;
