@@ -13,17 +13,19 @@ namespace ColorMemory.DTO
         }
     }
 
-    public class PlayerScoreDTO : ScoreDTO
+    public class PlayerRankingDTO : ScoreDTO
     {
         public int IconId { get; set; }
         public string Name { get; set; }
+        public int Ranking { get; set; }
 
-        public PlayerScoreDTO() { }
-        public PlayerScoreDTO(string playerId, string name, int iconId, int score) : base(playerId, score)
+        public PlayerRankingDTO() { }
+        public PlayerRankingDTO(string playerId, int score, string name, int iconId, int ranking) : base(playerId, score)
         {
             IconId = iconId;
             Name = name;
             Score = score;
+            Ranking = ranking;
         }
     }
 }

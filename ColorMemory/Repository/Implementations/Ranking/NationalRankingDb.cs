@@ -5,7 +5,7 @@ namespace ColorMemory.Repository.Implementations
 {
     public class NationalRankingDb : BaseRankingDb
     {
-        public NationalRankingDb(PlayerService playerService, ILogger<NationalRankingDb> logger, IConfiguration configuration)
-            : base(playerService, logger, configuration, "national_rankings") { }
+        public NationalRankingDb(PlayerDb playerDb, ILogger<NationalRankingDb> logger, IConfiguration configuration)
+            : base(playerDb, logger, configuration, "national_rankings") { }
     }
 }

@@ -28,7 +28,7 @@ namespace ColorMemory.Controllers
         {
             try
             {
-                await _scoreService.UpdateNationalScoreAsync(scoreInfo);
+                var result = await _scoreService.UpdateNationalScoreAsync(scoreInfo);
                 _logger.LogInformation($"updated {scoreInfo.PlayerId}'s national score");
                 return Ok();
             }
@@ -71,8 +71,8 @@ namespace ColorMemory.Controllers
         [HttpGet("{playerId}/ranking/weekly")]
         public async Task<IActionResult> GetPlayerWeeklyRankingAsync(string playerId)
         {
-            int rank = await _scoreService.GetPlayerWeeklyRankingAsync(playerId);
-            return Ok(rank);
+            int ranking = await _scoreService.GetPlayerWeeklyRankingAsync(playerId);
+            return Ok(ranking);
         }
     }
 }

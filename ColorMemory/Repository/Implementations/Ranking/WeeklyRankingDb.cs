@@ -9,7 +9,7 @@ namespace ColorMemory.Repository.Implementations
 {
     public class WeeklyRankingDb : BaseRankingDb
     {
-        public WeeklyRankingDb(PlayerService playerService, ILogger<WeeklyRankingDb> logger, IConfiguration configuration)
-            : base(playerService, logger, configuration, "weekly_rankings") { }
+        public WeeklyRankingDb(PlayerDb playerDb, ILogger<WeeklyRankingDb> logger, IConfiguration configuration)
+            : base(playerDb, logger, configuration, "weekly_rankings") { }
     }
 }

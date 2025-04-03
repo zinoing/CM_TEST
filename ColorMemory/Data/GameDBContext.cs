@@ -79,7 +79,7 @@ namespace ColorMemory.Data
                 entity.HasKey(p => p.PlayerId);
 
                 entity.Property(p => p.Name).IsRequired();
-                entity.Property(p => p.IconId).HasDefaultValue(0);
+                entity.Property(p => p.IconId).HasDefaultValue(1);
                 entity.Property(p => p.Score).HasDefaultValue(0);
                 entity.Property(p => p.Money).HasDefaultValue(0);
 

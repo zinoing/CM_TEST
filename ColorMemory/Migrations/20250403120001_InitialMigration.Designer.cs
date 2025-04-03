@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ColorMemory.Migrations
 {
     [DbContext(typeof(GameDbContext))]
-    [Migration("20250402121803_InitialMigration")]
+    [Migration("20250403120001_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -58,7 +58,7 @@ namespace ColorMemory.Migrations
                     b.Property<int>("IconId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasDefaultValue(1);
 
                     b.Property<int>("Money")
                         .ValueGeneratedOnAdd()

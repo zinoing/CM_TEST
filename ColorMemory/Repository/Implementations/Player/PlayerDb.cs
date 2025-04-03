@@ -132,20 +132,6 @@ namespace ColorMemory.Repository.Implementations
             }
         }
 
-        public async Task<PlayerScoreDTO> GetPlayerScoreDTOAsync(string playerId)
-        {
-            Player player = await GetPlayerAsync(playerId);
-
-            if (player != null)
-            {
-                return new PlayerScoreDTO(playerId, player.Name, player.IconId, player.Score);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         public async Task<string> GetNameAsync(string playerId)
         {
             Player player = await FindPlayerAsync(playerId);

@@ -55,7 +55,7 @@ namespace ColorMemory.Migrations
                     b.Property<int>("IconId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasDefaultValue(1);
 
                     b.Property<int>("Money")
                         .ValueGeneratedOnAdd()

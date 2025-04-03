@@ -42,7 +42,7 @@ namespace ColorMemory.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    IconId = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    IconId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     Score = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Money = table.Column<int>(type: "int", nullable: false, defaultValue: 0)
                 },
