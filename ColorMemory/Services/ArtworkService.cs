@@ -83,7 +83,11 @@ namespace ColorMemory.Services
             Dictionary<int, StageDTO> updatedStages = new Dictionary<int, StageDTO>();
             for (int i = 1; i <= previousStages.Count; i++)
             {
-                if (newStages[i].IsLock) continue;
+                if (newStages[i].IsLock)
+                {
+                    updatedStages.Add(i, previousStages[i]);
+                    continue;
+                }
 
                 if (previousStages[i].HintUsage + previousStages[i].IncorrectCnt > newStages[i].HintUsage + newStages[i].IncorrectCnt)
                 {
@@ -166,13 +170,13 @@ namespace ColorMemory.Services
                 // 여전히 가지지 못한 상태
                 else
                 {
-                    existingEntry.Rank = updatedRank;
+                    existingEntry.Rank = Rank.NONE;
                     existingEntry.HasIt = false;
                     existingEntry.ObtainedDate = null;
                     existingEntry.TotalMistakesAndHints = playerArtworkInfo.TotalMistakesAndHints;
                     existingEntry.TotalHints = playerArtworkInfo.TotalHints;
                     existingEntry.TotalMistakes = playerArtworkInfo.TotalMistakes;
-                    existingEntry.Stages = JsonConvert.SerializeObject(updatedStage); existingEntry.TotalHints = playerArtworkInfo.TotalHints;
+                    existingEntry.Stages = JsonConvert.SerializeObject(updatedStage);
                 }
             }
             else {
