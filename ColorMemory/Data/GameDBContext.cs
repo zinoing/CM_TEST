@@ -122,7 +122,5 @@ namespace ColorMemory.Data
                       .HasDefaultValueSql(null);
             });
         }
-
-
     }
 }
