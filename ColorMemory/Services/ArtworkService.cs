@@ -4,6 +4,7 @@ using ColorMemory.Controllers;
 using ColorMemory.DTO;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace ColorMemory.Services
 {
@@ -62,6 +63,7 @@ namespace ColorMemory.Services
             for (int i = 1; i <= stages.Count; i++)
             {
                 if (stages[i] == null) continue;
+                if (stages[i].IsLock) continue;
 
                 var newRank = (stages[i].HintUsage + stages[i].IncorrectCnt) switch
                 {
@@ -81,6 +83,8 @@ namespace ColorMemory.Services
             Dictionary<int, StageDTO> updatedStages = new Dictionary<int, StageDTO>();
             for (int i = 1; i <= previousStages.Count; i++)
             {
+                if (newStages[i].IsLock) continue;
+
                 if (previousStages[i].HintUsage + previousStages[i].IncorrectCnt > newStages[i].HintUsage + newStages[i].IncorrectCnt)
                 {
                     updatedStages.Add(i, newStages[i]);
@@ -94,71 +98,19 @@ namespace ColorMemory.Services
             return updatedStages;
         }
 
-        public async Task<Rank?> ObtainPlayerArtworkAsync(PlayerArtworkDTO playerArtworkInfo)
+        private Tuple<int, int, int> UpdateTotalMistakesAndHints(Dictionary<int, StageDTO> stages)
         {
-            int artworkId = playerArtworkInfo.ArtworkId;
-            string playerId = playerArtworkInfo.PlayerId;
-
-            var player = await _context.Players
-                .Include(p => p.PlayerArtworks)
-                .ThenInclude(pa => pa.Artwork)
-                .FirstOrDefaultAsync(p => p.PlayerId == playerId);
-
-            if (player == null)
-                return null;
-
-            var artwork = await _context.Artworks.FindAsync(artworkId);
-            if (artwork == null)
-                return null;
-
-            var existingEntry = player.PlayerArtworks
-                .FirstOrDefault(pa => pa.ArtworkId == artworkId);
-
-            Rank newRank = Rank.NONE;
-            var updatedStage = CalculateRankPerStage(playerArtworkInfo.Stages);
-
-            if (existingEntry == null)
+            int totalMistakesAndHints = 0;
+            int totalMistakes = 0;
+            int totalHints = 0;
+            for (int i = 1; i <= stages.Count; i++)
             {
-                // 아직 이 아트워크를 아예 안 가진 상태
-                newRank = playerArtworkInfo.TotalMistakesAndHints switch
-                {
-                    <= 16 => Rank.GOLD,
-                    <= 32 => Rank.SILVER,
-                    _ => Rank.COPPER
-                };
-
-                var newPlayerArtwork = new PlayerArtwork
-                {
-                    PlayerId = playerId,
-                    ArtworkId = artworkId,
-                    Rank = newRank,
-                    HasIt = true,
-                    ObtainedDate = DateTime.Now,
-                    TotalMistakesAndHints = playerArtworkInfo.TotalMistakesAndHints,
-                    Stages = JsonConvert.SerializeObject(updatedStage)
-                };
-
-                player.PlayerArtworks.Add(newPlayerArtwork);
+                if (stages[i].IsLock) continue;
+                totalMistakes += stages[i].IncorrectCnt;
+                totalHints += stages[i].HintUsage;
             }
-            else if (!existingEntry.HasIt)
-            {
-                // 이미 같은 키의 객체가 있으나 HasIt이 false인 경우
-                newRank = playerArtworkInfo.TotalMistakesAndHints switch
-                {
-                    <= 16 => Rank.GOLD,
-                    <= 32 => Rank.SILVER,
-                    _ => Rank.COPPER
-                };
-
-                existingEntry.Rank = newRank;
-                existingEntry.HasIt = true;
-                existingEntry.ObtainedDate = DateTime.Now;
-                existingEntry.TotalMistakesAndHints = playerArtworkInfo.TotalMistakesAndHints;
-                existingEntry.Stages = JsonConvert.SerializeObject(updatedStage);
-            }
-
-            await _context.SaveChangesAsync();
-            return newRank;
+            totalMistakesAndHints = totalMistakes + totalHints;
+            return new Tuple<int, int, int> ( totalMistakesAndHints, totalHints, totalMistakes );
         }
 
         public async Task<Rank?> UpdatePlayerArtworkAsync(PlayerArtworkDTO playerArtworkInfo)
@@ -187,6 +139,10 @@ namespace ColorMemory.Services
             var updatedStage = UpdateStagesWithBetterPerformance(playerArtworkInfo.Stages, JsonConvert.DeserializeObject<Dictionary<int, StageDTO>>(existingEntry.Stages));
             updatedStage = CalculateRankPerStage(updatedStage);
 
+            playerArtworkInfo.TotalMistakesAndHints = UpdateTotalMistakesAndHints(playerArtworkInfo.Stages).Item1;
+            playerArtworkInfo.TotalHints = UpdateTotalMistakesAndHints(playerArtworkInfo.Stages).Item2;
+            playerArtworkInfo.TotalMistakes = UpdateTotalMistakesAndHints(playerArtworkInfo.Stages).Item3;
+
             if (existingEntry.HasIt == false)
             {
                 updatedRank = playerArtworkInfo.TotalMistakesAndHints switch
@@ -203,6 +159,8 @@ namespace ColorMemory.Services
                     existingEntry.HasIt = true;
                     existingEntry.ObtainedDate = DateTime.Now;
                     existingEntry.TotalMistakesAndHints = playerArtworkInfo.TotalMistakesAndHints;
+                    existingEntry.TotalHints = playerArtworkInfo.TotalHints;
+                    existingEntry.TotalMistakes = playerArtworkInfo.TotalMistakes;
                     existingEntry.Stages = JsonConvert.SerializeObject(updatedStage);
                 }
                 // 여전히 가지지 못한 상태
@@ -212,7 +170,9 @@ namespace ColorMemory.Services
                     existingEntry.HasIt = false;
                     existingEntry.ObtainedDate = null;
                     existingEntry.TotalMistakesAndHints = playerArtworkInfo.TotalMistakesAndHints;
-                    existingEntry.Stages = JsonConvert.SerializeObject(updatedStage);
+                    existingEntry.TotalHints = playerArtworkInfo.TotalHints;
+                    existingEntry.TotalMistakes = playerArtworkInfo.TotalMistakes;
+                    existingEntry.Stages = JsonConvert.SerializeObject(updatedStage); existingEntry.TotalHints = playerArtworkInfo.TotalHints;
                 }
             }
             else {
@@ -231,12 +191,16 @@ namespace ColorMemory.Services
                     existingEntry.HasIt = true;
                     existingEntry.ObtainedDate = DateTime.Now;
                     existingEntry.TotalMistakesAndHints = playerArtworkInfo.TotalMistakesAndHints;
+                    existingEntry.TotalHints = playerArtworkInfo.TotalHints;
+                    existingEntry.TotalMistakes = playerArtworkInfo.TotalMistakes;
                     existingEntry.Stages = JsonConvert.SerializeObject(updatedStage);
                 }
                 else
                 {
                     existingEntry.HasIt = true;
                     existingEntry.TotalMistakesAndHints = playerArtworkInfo.TotalMistakesAndHints;
+                    existingEntry.TotalHints = playerArtworkInfo.TotalHints;
+                    existingEntry.TotalMistakes = playerArtworkInfo.TotalMistakes;
                     existingEntry.Stages = JsonConvert.SerializeObject(updatedStage);
                 }
             }

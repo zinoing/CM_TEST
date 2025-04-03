@@ -44,12 +44,15 @@ namespace ColorMemory.Data
         [Required]
         public Artwork Artwork { get; set; }
         public int TotalMistakesAndHints { get; set; }
+        public int TotalHints { get; set; }
+        public int TotalMistakes { get; set; }
 
         [Required]
         [Column(TypeName = "json")]
         public string Stages { get; set; } = JsonConvert.SerializeObject(
             Enumerable.Range(1, 16).ToDictionary(i => i, i => new StageDTO
             {
+                IsLock = true,
                 Rank = Rank.NONE,
                 HintUsage = 0,
                 IncorrectCnt = 0
@@ -106,6 +109,8 @@ namespace ColorMemory.Data
                       .HasForeignKey(pa => pa.ArtworkId);
 
                 entity.Property(pa => pa.TotalMistakesAndHints).HasDefaultValue(0);
+                entity.Property(pa => pa.TotalHints).HasDefaultValue(0);
+                entity.Property(pa => pa.TotalMistakes).HasDefaultValue(0);
 
                 entity.Property(pa => pa.Stages)
                       .IsRequired()
@@ -122,5 +127,7 @@ namespace ColorMemory.Data
                       .HasDefaultValueSql(null);
             });
         }
+
+
     }
 }

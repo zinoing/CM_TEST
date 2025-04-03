@@ -46,14 +46,16 @@ namespace ColorMemory.DTO
 
     public class StageDTO
     {
+        public bool IsLock { get; set; }
         public Rank Rank { get; set; }
         public int HintUsage { get; set; }
         public int IncorrectCnt { get; set; }
 
         public StageDTO() { }
 
-        public StageDTO(Rank rank, int hintUsage, int incorrectCnt)
+        public StageDTO(bool isLock, Rank rank, int hintUsage, int incorrectCnt)
         {
+            IsLock = isLock;
             Rank = rank;
             HintUsage = hintUsage;
             IncorrectCnt = incorrectCnt;
@@ -64,6 +66,8 @@ namespace ColorMemory.DTO
     {
         public int TotalMistakesAndHints { get; set; }
 
+        public int TotalHints { get; set; }
+        public int TotalMistakes { get; set; }
         public Dictionary<int, StageDTO> Stages { get; set; }
 
         public Rank Rank { get; set; }

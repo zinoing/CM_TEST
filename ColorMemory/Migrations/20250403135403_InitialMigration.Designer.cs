@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ColorMemory.Migrations
 {
     [DbContext(typeof(GameDbContext))]
-    [Migration("20250403120001_InitialMigration")]
+    [Migration("20250403135403_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -101,6 +101,16 @@ namespace ColorMemory.Migrations
                     b.Property<string>("Stages")
                         .IsRequired()
                         .HasColumnType("json");
+
+                    b.Property<int>("TotalHints")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("TotalMistakes")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<int>("TotalMistakesAndHints")
                         .ValueGeneratedOnAdd()

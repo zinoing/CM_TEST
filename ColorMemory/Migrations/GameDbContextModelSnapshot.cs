@@ -99,6 +99,16 @@ namespace ColorMemory.Migrations
                         .IsRequired()
                         .HasColumnType("json");
 
+                    b.Property<int>("TotalHints")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("TotalMistakes")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.Property<int>("TotalMistakesAndHints")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")

@@ -9,22 +9,6 @@ namespace ColorMemory.Controllers
 {
     public partial class PlayerController
     {
-        [HttpPost("artwork/obtain")]
-        public async Task<IActionResult> ObtainPlayerArtworkAsync([FromBody] PlayerArtworkDTO playerArtworkInfo)
-        {
-            var result = await _artworkService.ObtainPlayerArtworkAsync(playerArtworkInfo);
-
-            if (result == null)
-                return BadRequest(new
-                {
-                    Message = "Artwork could not be added.",
-                    Reason = "The artwork might already be owned by the player or does not exist."
-                });
-
-            _logger.LogInformation($"updated {playerArtworkInfo.Title} to {playerArtworkInfo.PlayerId}");
-            return Ok(new { rank = result.ToString() });
-        }
-
         [HttpPost("artwork/update")]
         public async Task<IActionResult> UpdatePlayerArtworkAsync([FromBody] PlayerArtworkDTO playerArtworkInfo)
         {

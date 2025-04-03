@@ -60,6 +60,8 @@ namespace ColorMemory.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ArtworkId = table.Column<int>(type: "int", nullable: false),
                     TotalMistakesAndHints = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    TotalHints = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    TotalMistakes = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Stages = table.Column<string>(type: "json", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Rank = table.Column<int>(type: "int", nullable: false),
