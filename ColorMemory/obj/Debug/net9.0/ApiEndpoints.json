@@ -260,22 +260,6 @@
   },
   {
     "ContainingType": "ColorMemory.Controllers.PlayerController",
-    "Method": "ObtainPlayerArtworkAsync",
-    "RelativePath": "api/player/artwork/obtain",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "playerArtworkInfo",
-        "Type": "ColorMemory.DTO.PlayerArtworkDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ColorMemory.Controllers.PlayerController",
     "Method": "UpdatePlayerArtworkAsync",
     "RelativePath": "api/player/artwork/update",
     "HttpMethod": "POST",
