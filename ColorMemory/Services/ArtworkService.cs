@@ -146,7 +146,7 @@ namespace ColorMemory.Services
             if (existingEntry == null) return null;
 
             Rank updatedRank = Rank.NONE;
-            var updatedStage = UpdateStagesWithBetterPerformance(playerArtworkInfo.Stages, JsonConvert.DeserializeObject<Dictionary<int, StageDTO>>(existingEntry.Stages));
+            var updatedStage = UpdateStagesWithBetterPerformance(JsonConvert.DeserializeObject<Dictionary<int, StageDTO>>(existingEntry.Stages), playerArtworkInfo.Stages);
             updatedStage = CalculateRankPerStage(updatedStage);
 
             playerArtworkInfo.TotalMistakesAndHints = UpdateTotalMistakesAndHints(playerArtworkInfo.Stages).Item1;
