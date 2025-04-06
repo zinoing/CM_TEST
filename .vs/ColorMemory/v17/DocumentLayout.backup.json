@@ -217,8 +217,7 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-02T12:12:39.659Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -228,7 +227,7 @@
               "RelativeDocumentMoniker": "ColorMemory\\Services\\ArtworkService.cs",
               "ToolTip": "C:\\Users\\zino\\Desktop\\ColorMemory\\ColorMemory\\Services\\ArtworkService.cs",
               "RelativeToolTip": "ColorMemory\\Services\\ArtworkService.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAIA5wFEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwEEAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-05T12:49:51.08Z",
               "EditorCaption": ""
@@ -243,8 +242,7 @@
               "RelativeToolTip": "ColorMemory\\DTO\\ArtworkDTO.cs",
               "ViewState": "AgIAACEAAAAAAAAAAAAlwDUAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T15:40:52.115Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-05T15:40:52.115Z"
             },
             {
               "$type": "Document",
