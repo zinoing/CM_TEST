@@ -91,16 +91,16 @@ namespace ColorMemory.Services
             Dictionary<int, StageDTO> updatedStages = new Dictionary<int, StageDTO>();
             for (int i = 1; i <= previousStages.Count; i++)
             {
+                // 
                 if (newStages[i].IsLock)
                 {
                     updatedStages.Add(i, previousStages[i]);
                     continue;
                 }
 
+                // 이전 스테이지를 클리어하여 lock이 해금되어있지만 아직 플레이 하지 않은 상태
                 if (previousStages[i].HintUsage == -1 || previousStages[i].IncorrectCnt == -1)
                 {
-                    if (newStages[i].HintUsage == -1) { newStages[i].HintUsage = 0; }
-                    if (newStages[i].IncorrectCnt == -1) { newStages[i].IncorrectCnt = 0; }
                     updatedStages.Add(i, newStages[i]);
                     continue;
                 }

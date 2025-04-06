@@ -54,22 +54,6 @@
   },
   {
     "ContainingType": "ColorMemory.Controllers.PlayerController",
-    "Method": "GetPlayerOwnedArtworksAsync",
-    "RelativePath": "api/player/{playerId}/artworks/owned",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "playerId",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ColorMemory.Controllers.PlayerController",
     "Method": "GetWholePlayerArtworksAsync",
     "RelativePath": "api/player/{playerId}/artworks/whole",
     "HttpMethod": "GET",
