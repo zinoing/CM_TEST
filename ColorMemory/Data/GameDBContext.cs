@@ -52,7 +52,7 @@ namespace ColorMemory.Data
         public string Stages { get; set; } = JsonConvert.SerializeObject(
             Enumerable.Range(1, 16).ToDictionary(i => i, i => new StageDTO
             {
-                IsLock = true,
+                Status = StageStauts.Lock,
                 Rank = Rank.NONE,
                 HintUsage = -1,
                 IncorrectCnt = -1

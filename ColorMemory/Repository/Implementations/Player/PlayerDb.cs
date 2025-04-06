@@ -70,13 +70,13 @@ namespace ColorMemory.Repository.Implementations
             {
                 var stages = Enumerable.Range(1, 16).ToDictionary(i => i, i => new StageDTO
                 {
-                    IsLock = true,
+                    Status = StageStauts.Lock,
                     Rank = Rank.NONE,
                     HintUsage = -1,
                     IncorrectCnt = -1
                 });
 
-                stages[1].IsLock = false;
+                stages[1].Status = StageStauts.Open;
 
                 var newPlayerArtwork = new PlayerArtwork
                 {

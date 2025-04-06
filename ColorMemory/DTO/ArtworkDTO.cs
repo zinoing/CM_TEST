@@ -44,18 +44,25 @@ namespace ColorMemory.DTO
         GOLD,
     }
 
+    public enum StageStauts
+    {
+        Lock,
+        Open,
+        Clear,
+    }
+
     public class StageDTO
     {
-        public bool IsLock { get; set; }
+        public StageStauts Status { get; set; }
         public Rank Rank { get; set; }
         public int HintUsage { get; set; }
         public int IncorrectCnt { get; set; }
 
         public StageDTO() { }
 
-        public StageDTO(bool isLock, Rank rank, int hintUsage, int incorrectCnt)
+        public StageDTO(StageStauts status, Rank rank, int hintUsage, int incorrectCnt)
         {
-            IsLock = isLock;
+            Status = status;
             Rank = rank;
             HintUsage = hintUsage;
             IncorrectCnt = incorrectCnt;

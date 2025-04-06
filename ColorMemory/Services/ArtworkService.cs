@@ -63,11 +63,16 @@ namespace ColorMemory.Services
             for (int i = 1; i <= stages.Count; i++)
             {
                 if (stages[i] == null) continue;
-                if (stages[i].IsLock) continue;
+
+                // 만약 아직 클리어하지 못한 상태라면
+                if (stages[i].Status == StageStauts.Lock || stages[i].Status == StageStauts.Open)
+                {
+                    continue;
+                }
 
                 Rank newRank = Rank.NONE;
 
-                if (stages[i].HintUsage != -1 && stages[i].IncorrectCnt == -1)
+                if (stages[i].Status == StageStauts.Clear)
                 {
                     newRank = (stages[i].HintUsage + stages[i].IncorrectCnt) switch
                     {
@@ -88,26 +93,37 @@ namespace ColorMemory.Services
             Dictionary<int, StageDTO> updatedStages = new Dictionary<int, StageDTO>();
             for (int i = 1; i <= previousStages.Count; i++)
             {
-                if (newStages[i].IsLock)
+                // 만약 아직 잠겨 있는 상태라면
+                if (newStages[i].Status == StageStauts.Lock)
                 {
                     updatedStages.Add(i, previousStages[i]);
                     continue;
                 }
 
-                // 이전 스테이지를 클리어하여 lock이 해금되어있지만 아직 플레이 하지 않은 상태
-                if (newStages[i].HintUsage == -1 && newStages[i].IncorrectCnt == -1)
+                // 만약 열려 있는 상태라면
+                if (newStages[i].Status == StageStauts.Open)
                 {
                     updatedStages.Add(i, newStages[i]);
                     continue;
                 }
 
-                if (previousStages[i].HintUsage + previousStages[i].IncorrectCnt > newStages[i].HintUsage + newStages[i].IncorrectCnt)
+                // 만약 이전에 플레이 해본 상태라면
+                if (newStages[i].Status == StageStauts.Clear)
                 {
-                    updatedStages.Add(i, newStages[i]);
-                }
-                else
-                {
-                    updatedStages.Add(i, previousStages[i]);
+                    if (previousStages[i].HintUsage == -1 && previousStages[i].IncorrectCnt == -1)
+                    {
+                        updatedStages.Add(i, newStages[i]);
+                        continue;
+                    }
+
+                    if (previousStages[i].HintUsage + previousStages[i].IncorrectCnt > newStages[i].HintUsage + newStages[i].IncorrectCnt)
+                    {
+                        updatedStages.Add(i, newStages[i]);
+                    }
+                    else
+                    {
+                        updatedStages.Add(i, previousStages[i]);
+                    }
                 }
             }
 
@@ -121,7 +137,7 @@ namespace ColorMemory.Services
             int totalHints = 0;
             for (int i = 1; i <= stages.Count; i++)
             {
-                if (stages[i].IsLock) continue;
+                if (stages[i].Status == StageStauts.Lock) continue;
                 if (stages[i].HintUsage == -1) { stages[i].HintUsage = 0; }
                 if (stages[i].IncorrectCnt == -1) { stages[i].IncorrectCnt = 0; }
 
