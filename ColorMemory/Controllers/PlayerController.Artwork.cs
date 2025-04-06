@@ -26,17 +26,35 @@ namespace ColorMemory.Controllers
         }
 
         [HttpGet("{playerId}/artworks/owned")]
-        public async Task<IActionResult> GetPlayerArtworksAsync(string playerId)
+        public async Task<IActionResult> GetPlayerOwnedArtworksAsync(string playerId)
         {
             var artworks = await _artworkService.GetOwnedArtworksAsync(playerId);
 
             return Ok(artworks);
         }
 
-        [HttpGet("{playerId}/artworks/unowned")]
-        public async Task<IActionResult> GetPlayerUnownedArtworksAsync(string playerId)
+        [HttpGet("{playerId}/artworks/{hasIt}")]
+        public async Task<IActionResult> GetPlayerArtworksAsync(string playerId,    bool hasIt)
         {
-            var artworks = await _artworkService.GetUnownedArtworksAsync(playerId);
+            List<PlayerArtworkDTO> artworks;
+
+            if (hasIt)
+            {
+                artworks = await _artworkService.GetOwnedArtworksAsync(playerId);
+            }
+            else
+            {
+                artworks = await _artworkService.GetUnownedArtworksAsync(playerId);
+
+            }
+
+            return Ok(artworks);
+        }
+
+        [HttpGet("{playerId}/artworks/whole")]
+        public async Task<IActionResult> GetWholePlayerArtworksAsync(string playerId)
+        {
+            List<PlayerArtworkDTO> artworks = await _artworkService.GetWholePlayerArtworksAsync(playerId);
 
             return Ok(artworks);
         }

@@ -76,20 +76,43 @@ namespace ColorMemory.DTO
 
         public PlayerArtworkDTO() { }
 
-        public PlayerArtworkDTO(string playerId, int artworkId, string title, string artist, int totalMistakesAndHints, Dictionary<int, StageDTO> stages, Rank rank, bool hasIt, DateTime? obtainedDate)
+        public PlayerArtworkDTO(
+            string playerId,
+            int artworkId,
+            string title,
+            string artist,
+            int totalMistakesAndHints,
+            int totalHints,
+            int totalMistakes,
+            Dictionary<int, StageDTO> stages,
+            Rank rank,
+            bool hasIt,
+            DateTime? obtainedDate)
             : base(playerId, artworkId, title, artist)
         {
             TotalMistakesAndHints = totalMistakesAndHints;
+            TotalHints = totalHints;
+            TotalHints = totalMistakes;
             Stages = stages;
             Rank = rank;
             HasIt = hasIt;
             ObtainedDate = obtainedDate;
         }
 
-        public PlayerArtworkDTO(ArtworkDTO artworkDTO, int totalMistakesAndHints, Dictionary<int, StageDTO> stages, Rank rank, bool hasIt, DateTime? obtainedDate)
+        public PlayerArtworkDTO(
+            ArtworkDTO artworkDTO,
+            int totalMistakesAndHints,
+            int totalHints,
+            int totalMistakes,
+            Dictionary<int, StageDTO> stages,
+            Rank rank,
+            bool hasIt,
+            DateTime? obtainedDate)
         : base(artworkDTO.PlayerId, artworkDTO.ArtworkId, artworkDTO.Title, artworkDTO.Artist)
         {
             TotalMistakesAndHints = totalMistakesAndHints;
+            TotalHints = totalHints;
+            TotalHints = totalMistakes;
             Stages = stages;
             Rank = rank;
             HasIt = hasIt;

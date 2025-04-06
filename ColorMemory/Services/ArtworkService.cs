@@ -65,12 +65,20 @@ namespace ColorMemory.Services
                 if (stages[i] == null) continue;
                 if (stages[i].IsLock) continue;
 
-                var newRank = (stages[i].HintUsage + stages[i].IncorrectCnt) switch
+                Rank newRank = Rank.NONE;
+
+                if (stages[i].HintUsage != -1 || stages[i].IncorrectCnt == -1)
                 {
-                    <= 1 => Rank.GOLD,
-                    <= 2 => Rank.SILVER,
-                    _ => Rank.COPPER
-                };
+                    if (stages[i].HintUsage == -1) { stages[i].HintUsage = 0; }
+                    if (stages[i].IncorrectCnt == -1) { stages[i].IncorrectCnt = 0; }
+
+                    newRank = (stages[i].HintUsage + stages[i].IncorrectCnt) switch
+                    {
+                        <= 1 => Rank.GOLD,
+                        <= 2 => Rank.SILVER,
+                        _ => Rank.COPPER
+                    };
+                }
 
                 stages[i].Rank = newRank;
             }
@@ -91,6 +99,8 @@ namespace ColorMemory.Services
 
                 if (previousStages[i].HintUsage == -1 || previousStages[i].IncorrectCnt == -1)
                 {
+                    if (newStages[i].HintUsage == -1) { newStages[i].HintUsage = 0; }
+                    if (newStages[i].IncorrectCnt == -1) { newStages[i].IncorrectCnt = 0; }
                     updatedStages.Add(i, newStages[i]);
                     continue;
                 }
@@ -116,6 +126,9 @@ namespace ColorMemory.Services
             for (int i = 1; i <= stages.Count; i++)
             {
                 if (stages[i].IsLock) continue;
+                if (stages[i].HintUsage == -1) { stages[i].HintUsage = 0; }
+                if (stages[i].IncorrectCnt == -1) { stages[i].IncorrectCnt = 0; }
+
                 totalMistakes += stages[i].IncorrectCnt;
                 totalHints += stages[i].HintUsage;
             }
@@ -246,6 +259,9 @@ namespace ColorMemory.Services
                     title: pa.Artwork.Title,
                     artist: pa.Artwork.Artist,
                     totalMistakesAndHints: pa.TotalMistakesAndHints,
+                    totalHints: pa.TotalHints,
+                    totalMistakes: pa.TotalMistakes,
+
                     stages: JsonConvert.DeserializeObject<Dictionary<int, StageDTO>>(pa.Stages),
                     rank: pa.Rank,
                     hasIt: pa.HasIt,
@@ -278,6 +294,8 @@ namespace ColorMemory.Services
                     title: pa.Artwork.Title,
                     artist: pa.Artwork.Artist,
                     totalMistakesAndHints: 0,
+                    totalHints: pa.TotalHints,
+                    totalMistakes: pa.TotalMistakes,
                     stages: JsonConvert.DeserializeObject<Dictionary<int, StageDTO>>(pa.Stages),
                     rank: pa.Rank,
                     hasIt: pa.HasIt,
@@ -289,7 +307,39 @@ namespace ColorMemory.Services
 
             return result;
         }
+        public async Task<List<PlayerArtworkDTO>> GetWholePlayerArtworksAsync(string playerId)
+        {
+            var player = await _context.Players
+                .Include(p => p.PlayerArtworks)
+                    .ThenInclude(pa => pa.Artwork)
+                .FirstOrDefaultAsync(p => p.PlayerId == playerId);
 
+            if (player == null)
+                return new List<PlayerArtworkDTO>();
+
+            var result = new List<PlayerArtworkDTO>();
+
+            foreach (var pa in player.PlayerArtworks)
+            {
+                var dto = new PlayerArtworkDTO(
+                    playerId: playerId,
+                    artworkId: pa.Artwork.ArtworkId,
+                    title: pa.Artwork.Title,
+                    artist: pa.Artwork.Artist,
+                    totalMistakesAndHints: 0,
+                    totalHints: pa.TotalHints,
+                    totalMistakes: pa.TotalMistakes,
+                    stages: JsonConvert.DeserializeObject<Dictionary<int, StageDTO>>(pa.Stages),
+                    rank: pa.Rank,
+                    hasIt: pa.HasIt,
+                    obtainedDate: null
+                );
+
+                result.Add(dto);
+            }
+
+            return result;
+        }
     }
 
 }
