@@ -195,8 +195,7 @@
               "ViewState": "AgIAADYAAAAAAAAAAADwv0MAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-31T14:40:43.189Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -234,8 +233,7 @@
               "RelativeToolTip": "ColorMemory\\Data\\GameDBContext.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAswDYAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-06T10:26:03.682Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-06T10:26:03.682Z"
             },
             {
               "$type": "Document",
@@ -243,9 +241,9 @@
               "Title": "ArtworkService.cs",
               "DocumentMoniker": "C:\\Users\\zino\\Desktop\\ColorMemory\\ColorMemory\\Services\\ArtworkService.cs",
               "RelativeDocumentMoniker": "ColorMemory\\Services\\ArtworkService.cs",
-              "ToolTip": "C:\\Users\\zino\\Desktop\\ColorMemory\\ColorMemory\\Services\\ArtworkService.cs",
-              "RelativeToolTip": "ColorMemory\\Services\\ArtworkService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\zino\\Desktop\\ColorMemory\\ColorMemory\\Services\\ArtworkService.cs*",
+              "RelativeToolTip": "ColorMemory\\Services\\ArtworkService.cs*",
+              "ViewState": "AgIAADwAAAAAAAAAAAAowE8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-05T12:49:51.08Z",
               "EditorCaption": ""
@@ -260,8 +258,7 @@
               "RelativeToolTip": "ColorMemory\\DTO\\ArtworkDTO.cs",
               "ViewState": "AgIAAD4AAAAAAAAAAAA3wDsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T15:40:52.115Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-05T15:40:52.115Z"
             },
             {
               "$type": "Document",

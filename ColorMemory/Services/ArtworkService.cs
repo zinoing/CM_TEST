@@ -65,14 +65,20 @@ namespace ColorMemory.Services
                 if (stages[i] == null) continue;
 
                 // 만약 아직 클리어하지 못한 상태라면
-                if (stages[i].Status == StageStauts.Lock || stages[i].Status == StageStauts.Open)
+                if (stages[i].Status == StageStauts.Lock)
                 {
                     continue;
                 }
 
                 Rank newRank = Rank.NONE;
 
-                if (stages[i].Status == StageStauts.Clear)
+                // 다음 스테이지가 오픈될 경우엔 continue
+                if(stages[i].Status == StageStauts.Open && stages[i].IncorrectCnt == -1 && stages[i].HintUsage == -1)
+                {
+                    continue;
+                }
+
+                if (stages[i].Status == StageStauts.Clear || stages[i].Status == StageStauts.Open)
                 {
                     newRank = (stages[i].HintUsage + stages[i].IncorrectCnt) switch
                     {
