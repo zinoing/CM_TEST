@@ -25,14 +25,6 @@ namespace ColorMemory.Controllers
             return Ok(new { rank = result.ToString() });
         }
 
-        [HttpGet("{playerId}/artworks/owned")]
-        public async Task<IActionResult> GetPlayerOwnedArtworksAsync(string playerId)
-        {
-            var artworks = await _artworkService.GetOwnedArtworksAsync(playerId);
-
-            return Ok(artworks);
-        }
-
         [HttpGet("{playerId}/artworks/{hasIt}")]
         public async Task<IActionResult> GetPlayerArtworksAsync(string playerId, bool hasIt)
         {

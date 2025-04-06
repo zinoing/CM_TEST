@@ -261,7 +261,6 @@ namespace ColorMemory.Services
                     totalMistakesAndHints: pa.TotalMistakesAndHints,
                     totalHints: pa.TotalHints,
                     totalMistakes: pa.TotalMistakes,
-
                     stages: JsonConvert.DeserializeObject<Dictionary<int, StageDTO>>(pa.Stages),
                     rank: pa.Rank,
                     hasIt: pa.HasIt,
@@ -332,7 +331,7 @@ namespace ColorMemory.Services
                     stages: JsonConvert.DeserializeObject<Dictionary<int, StageDTO>>(pa.Stages),
                     rank: pa.Rank,
                     hasIt: pa.HasIt,
-                    obtainedDate: null
+                    obtainedDate: pa.ObtainedDate
                 );
 
                 result.Add(dto);
