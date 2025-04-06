@@ -92,7 +92,7 @@ namespace ColorMemory.DTO
         {
             TotalMistakesAndHints = totalMistakesAndHints;
             TotalHints = totalHints;
-            TotalHints = totalMistakes;
+            TotalMistakes = totalMistakes;
             Stages = stages;
             Rank = rank;
             HasIt = hasIt;
@@ -112,7 +112,7 @@ namespace ColorMemory.DTO
         {
             TotalMistakesAndHints = totalMistakesAndHints;
             TotalHints = totalHints;
-            TotalHints = totalMistakes;
+            TotalMistakes = totalMistakes;
             Stages = stages;
             Rank = rank;
             HasIt = hasIt;

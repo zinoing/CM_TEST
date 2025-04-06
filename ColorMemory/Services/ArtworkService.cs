@@ -278,7 +278,7 @@ namespace ColorMemory.Services
         {
             var player = await _context.Players
                 .Include(p => p.PlayerArtworks)
-                    .ThenInclude(pa => pa.Artwork)
+                .ThenInclude(pa => pa.Artwork)
                 .FirstOrDefaultAsync(p => p.PlayerId == playerId);
 
             if (player == null)
@@ -293,7 +293,7 @@ namespace ColorMemory.Services
                     artworkId: pa.Artwork.ArtworkId,
                     title: pa.Artwork.Title,
                     artist: pa.Artwork.Artist,
-                    totalMistakesAndHints: 0,
+                    totalMistakesAndHints: pa.TotalMistakesAndHints,
                     totalHints: pa.TotalHints,
                     totalMistakes: pa.TotalMistakes,
                     stages: JsonConvert.DeserializeObject<Dictionary<int, StageDTO>>(pa.Stages),

@@ -34,7 +34,7 @@ namespace ColorMemory.Controllers
         }
 
         [HttpGet("{playerId}/artworks/{hasIt}")]
-        public async Task<IActionResult> GetPlayerArtworksAsync(string playerId,    bool hasIt)
+        public async Task<IActionResult> GetPlayerArtworksAsync(string playerId, bool hasIt)
         {
             List<PlayerArtworkDTO> artworks;
 
