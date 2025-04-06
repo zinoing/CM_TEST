@@ -144,8 +144,10 @@ namespace ColorMemory.Services
             for (int i = 1; i <= stages.Count; i++)
             {
                 if (stages[i].Status == StageStauts.Lock) continue;
-                if (stages[i].HintUsage == -1) { stages[i].HintUsage = 0; }
-                if (stages[i].IncorrectCnt == -1) { stages[i].IncorrectCnt = 0; }
+                if (stages[i].HintUsage == -1 && stages[i].IncorrectCnt == -1)
+                {
+                    continue;
+                }
 
                 totalMistakes += stages[i].IncorrectCnt;
                 totalHints += stages[i].HintUsage;
