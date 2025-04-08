@@ -2625,11 +2625,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\zino\\Desktop\\ColorMemory\\ColorMemory\\ColorMemory.csproj",
+      "projectUniqueName": "C:\\Users\\zino\\Desktop\\ColorMemory - Copy1\\ColorMemory\\ColorMemory.csproj",
       "projectName": "ColorMemory",
-      "projectPath": "C:\\Users\\zino\\Desktop\\ColorMemory\\ColorMemory\\ColorMemory.csproj",
+      "projectPath": "C:\\Users\\zino\\Desktop\\ColorMemory - Copy1\\ColorMemory\\ColorMemory.csproj",
       "packagesPath": "C:\\Users\\zino\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\zino\\Desktop\\ColorMemory\\ColorMemory\\obj\\",
+      "outputPath": "C:\\Users\\zino\\Desktop\\ColorMemory - Copy1\\ColorMemory\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

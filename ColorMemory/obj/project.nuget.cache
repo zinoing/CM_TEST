@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HbbPnRppgpM=",
+  "dgSpecHash": "iF9my43SCRo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\zino\\Desktop\\ColorMemory\\ColorMemory\\ColorMemory.csproj",
+  "projectFilePath": "C:\\Users\\zino\\Desktop\\ColorMemory - Copy1\\ColorMemory\\ColorMemory.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\zino\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\zino\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.3\\microsoft.aspnetcore.openapi.8.0.3.nupkg.sha512",

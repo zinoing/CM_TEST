@@ -98,6 +98,12 @@ namespace ColorMemory.Repository.Implementations
         {
             return await _database.SortedSetRemoveAsync(_key, userId);
         }
+
+        public async Task ResetRankingAsync()
+        {
+            await _database.KeyDeleteAsync(_key);
+        }
+
     }
 
 }
