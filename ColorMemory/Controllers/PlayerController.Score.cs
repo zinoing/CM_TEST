@@ -64,7 +64,14 @@ namespace ColorMemory.Controllers
         [HttpGet("{playerId}/score/weekly/surrounding/{range}")]
         public async Task<IActionResult> GetSurroundingWeeklyRankingAsync(string playerId, int range)
         {
-            var scores = await _scoreService.GetSurroundingWeeklyScoresAsync(playerId, range);
+            var scores = await _scoreService.GetSurroundingWeeklyScoresByIdAsync(playerId, range);
+            return Ok(scores);
+        }
+
+        [HttpGet("score/{score}/weekly/surrounding/{range}")]
+        public async Task<IActionResult> GetSurroundingWeeklyScoresByScoreAsync(int score, int range)
+        {
+            var scores = await _scoreService.GetSurroundingWeeklyScoresByScoreAsync(score, range);
             return Ok(scores);
         }
 

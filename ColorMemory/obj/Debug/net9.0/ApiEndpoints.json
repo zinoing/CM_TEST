@@ -297,6 +297,27 @@
   },
   {
     "ContainingType": "ColorMemory.Controllers.PlayerController",
+    "Method": "GetSurroundingWeeklyScoresByScoreAsync",
+    "RelativePath": "api/player/score/{score}/weekly/surrounding/{range}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "score",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "range",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ColorMemory.Controllers.PlayerController",
     "Method": "UpdateNationalScoreAsync",
     "RelativePath": "api/player/score/national/update",
     "HttpMethod": "POST",

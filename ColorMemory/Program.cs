@@ -34,6 +34,7 @@ builder.Services.AddDbContext<GameDbContext>(options =>
             maxRetryDelay: TimeSpan.FromSeconds(10),
             errorNumbersToAdd: null)
     ));
+
 builder.Services.AddHostedService<WeeklyResetService>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
