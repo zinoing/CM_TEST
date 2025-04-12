@@ -68,7 +68,7 @@ namespace ColorMemory.Repository.Implementations
 
             foreach (var artwork in artworks)
             {
-                var stages = Enumerable.Range(1, 16).ToDictionary(i => i, i => new StageDTO
+                var stages = Enumerable.Range(0, 15).ToDictionary(i => i, i => new StageDTO
                 {
                     Status = StageStauts.Lock,
                     Rank = Rank.NONE,
