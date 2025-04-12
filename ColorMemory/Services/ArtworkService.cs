@@ -60,7 +60,7 @@ namespace ColorMemory.Services
 
         private Dictionary<int, StageDTO> CalculateRankPerStage(Dictionary<int, StageDTO> stages)
         {
-            for (int i = 1; i <= stages.Count; i++)
+            for (int i = 0; i < stages.Count; i++)
             {
                 if (stages[i] == null) continue;
 
@@ -97,7 +97,7 @@ namespace ColorMemory.Services
         private Dictionary<int, StageDTO> UpdateStagesWithBetterPerformance(Dictionary<int, StageDTO> previousStages, Dictionary<int, StageDTO> newStages)
         {
             Dictionary<int, StageDTO> updatedStages = new Dictionary<int, StageDTO>();
-            for (int i = 1; i <= previousStages.Count; i++)
+            for (int i = 0; i < previousStages.Count; i++)
             {
                 // 만약 아직 잠겨 있는 상태라면
                 if (newStages[i].Status == StageStauts.Lock)
@@ -141,7 +141,7 @@ namespace ColorMemory.Services
             int totalMistakesAndHints = 0;
             int totalMistakes = 0;
             int totalHints = 0;
-            for (int i = 1; i <= stages.Count; i++)
+            for (int i = 0; i < stages.Count; i++)
             {
                 if (stages[i].Status == StageStauts.Lock) continue;
                 if (stages[i].HintUsage == -1 && stages[i].IncorrectCnt == -1)
