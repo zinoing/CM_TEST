@@ -50,7 +50,7 @@ namespace ColorMemory.Data
         [Required]
         [Column(TypeName = "json")]
         public string Stages { get; set; } = JsonConvert.SerializeObject(
-            Enumerable.Range(0, 15).ToDictionary(i => i, i => new StageDTO
+            Enumerable.Range(0, 16).ToDictionary(i => i, i => new StageDTO
             {
                 Status = StageStauts.Lock,
                 Rank = Rank.NONE,
