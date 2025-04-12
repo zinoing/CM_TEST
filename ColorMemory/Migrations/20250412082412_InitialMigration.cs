@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -19,8 +18,7 @@ namespace ColorMemory.Migrations
                 name: "Artworks",
                 columns: table => new
                 {
-                    ArtworkId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ArtworkId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Artist = table.Column<string>(type: "longtext", nullable: false)
@@ -42,7 +40,7 @@ namespace ColorMemory.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    IconId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    IconId = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Score = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Money = table.Column<int>(type: "int", nullable: false, defaultValue: 0)
                 },

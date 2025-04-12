@@ -104,7 +104,6 @@ namespace ColorMemory.Repository.Implementations
             long start = Math.Max(0, centerIndex - range);
             long end = centerIndex + range - 1;
 
-            // 3. 해당 순위 범위의 사람들 조회 (높은 점수 순 정렬)
             var scores = await _database.SortedSetRangeByRankWithScoresAsync(
                 _key,
                 start,
@@ -140,8 +139,6 @@ namespace ColorMemory.Repository.Implementations
 
             return playerScores;
         }
-
-
 
         public async Task<bool> DeleteScoreAsyncById(string userId)
         {

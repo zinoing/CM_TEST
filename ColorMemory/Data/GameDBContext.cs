@@ -24,7 +24,7 @@ namespace ColorMemory.Data
     public class Artwork
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ArtworkId { get; set; }
         [Required]
         public string Title { get; set; }
@@ -50,7 +50,7 @@ namespace ColorMemory.Data
         [Required]
         [Column(TypeName = "json")]
         public string Stages { get; set; } = JsonConvert.SerializeObject(
-            Enumerable.Range(1, 16).ToDictionary(i => i, i => new StageDTO
+            Enumerable.Range(0, 15).ToDictionary(i => i, i => new StageDTO
             {
                 Status = StageStauts.Lock,
                 Rank = Rank.NONE,
@@ -82,7 +82,7 @@ namespace ColorMemory.Data
                 entity.HasKey(p => p.PlayerId);
 
                 entity.Property(p => p.Name).IsRequired();
-                entity.Property(p => p.IconId).HasDefaultValue(1);
+                entity.Property(p => p.IconId).HasDefaultValue(0);
                 entity.Property(p => p.Score).HasDefaultValue(0);
                 entity.Property(p => p.Money).HasDefaultValue(0);
 
@@ -93,7 +93,8 @@ namespace ColorMemory.Data
 
             modelBuilder.Entity<Artwork>(entity =>
             {
-                entity.HasKey(a => a.ArtworkId);
+                entity.Property(a => a.ArtworkId)
+                        .ValueGeneratedNever();
 
                 entity.Property(a => a.Title).IsRequired();
                 entity.Property(a => a.Artist).IsRequired();

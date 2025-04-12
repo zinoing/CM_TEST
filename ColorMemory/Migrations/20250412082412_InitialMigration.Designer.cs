@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ColorMemory.Migrations
 {
     [DbContext(typeof(GameDbContext))]
-    [Migration("20250403135403_InitialMigration")]
+    [Migration("20250412082412_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -28,10 +28,7 @@ namespace ColorMemory.Migrations
             modelBuilder.Entity("ColorMemory.Data.Artwork", b =>
                 {
                     b.Property<int>("ArtworkId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ArtworkId"));
 
                     b.Property<string>("Artist")
                         .IsRequired()
@@ -58,7 +55,7 @@ namespace ColorMemory.Migrations
                     b.Property<int>("IconId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(1);
+                        .HasDefaultValue(0);
 
                     b.Property<int>("Money")
                         .ValueGeneratedOnAdd()
