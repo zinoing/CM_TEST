@@ -110,3 +110,4 @@ C:\Users\zino\Desktop\ColorMemory\ColorMemory\obj\Debug\net9.0\refint\ColorMemor
 C:\Users\zino\Desktop\ColorMemory\ColorMemory\obj\Debug\net9.0\ColorMemory.pdb
 C:\Users\zino\Desktop\ColorMemory\ColorMemory\obj\Debug\net9.0\ColorMemory.genruntimeconfig.cache
 C:\Users\zino\Desktop\ColorMemory\ColorMemory\obj\Debug\net9.0\ref\ColorMemory.dll
+C:\Users\zino\Desktop\ColorMemory\ColorMemory\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

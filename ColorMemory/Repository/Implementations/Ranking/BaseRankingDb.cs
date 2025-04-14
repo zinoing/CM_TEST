@@ -34,20 +34,20 @@ namespace ColorMemory.Repository.Implementations
             return true;
         }
 
-        public async Task<int?> GetHighScoreAsIntAsyncById(string userId)
+        public async Task<int> GetHighScoreAsIntAsyncById(string userId)
         {
             var score = await _database.SortedSetScoreAsync(_key, userId);
             if (score.HasValue)
             {
-                return (int?)score.Value;
+                return (int)score.Value;
             }
-            return null;
+            return 0;
         }
 
         public async Task<int> GetRankingAsIntAsyncById(string userId)
         {
             var rank = await _database.SortedSetRankAsync(_key, userId, Order.Descending);
-            return rank.HasValue ? (int)rank.Value + 1 : -1;
+            return rank.HasValue ? (int)rank.Value + 1 : 0;
         }
 
         public async Task<List<PlayerRankingDTO>> GetTopRanksAsync(int count)

@@ -8,13 +8,11 @@ namespace ColorMemory.Services
     public class ScoreService
     {
         private readonly WeeklyRankingDb _weeklyRankingDb;
-        private readonly NationalRankingDb _nationalRankingDb;
         private readonly PlayerDb _playerDb;
 
-        public ScoreService(WeeklyRankingDb weeklyRankingDb, NationalRankingDb nationalRankingDb, PlayerDb playerDb)
+        public ScoreService(WeeklyRankingDb weeklyRankingDb, PlayerDb playerDb)
         {
             _weeklyRankingDb = weeklyRankingDb;
-            _nationalRankingDb = nationalRankingDb;
             _playerDb = playerDb;
         }
 
@@ -28,15 +26,13 @@ namespace ColorMemory.Services
 
         }
 
-        public async Task<bool> UpdateNationalScoreAsync(ScoreDTO scoreInfo)
+        public async Task<int> GetHighScoreAsync(string playerId)
         {
-            var result = await _nationalRankingDb.SaveScoreAsync(scoreInfo);
-            if (!result) return result;
-            result = await _playerDb.SetScoreAsync(scoreInfo.PlayerId, scoreInfo.Score);
-            return result;
+            Player player = await _playerDb.GetPlayerAsync(playerId);
+            return player.Score;
         }
 
-        public async Task<int?> GetWeeklyScoreAsIntAsync(string playerId)
+        public async Task<int> GetWeeklyScoreAsIntAsync(string playerId)
         {
             return await _weeklyRankingDb.GetHighScoreAsIntAsyncById(playerId);
         }
@@ -44,10 +40,11 @@ namespace ColorMemory.Services
         public async Task<PlayerRankingDTO> GetWeeklyScoreAsDTOAsync(string playerId)
         {
             Player player = await _playerDb.GetPlayerAsync(playerId);
+            int score = await _weeklyRankingDb.GetHighScoreAsIntAsyncById(playerId);
             int ranking = await _weeklyRankingDb.GetRankingAsIntAsyncById(playerId);
             if (player != null)
             {
-                return new PlayerRankingDTO(playerId, player.Score, player.Name, player.IconId, ranking);
+                return new PlayerRankingDTO(playerId, score, player.Name, player.IconId, ranking);
             }
             else
             {
@@ -55,19 +52,9 @@ namespace ColorMemory.Services
             }
         }
 
-        public async Task<int?> GetNationalScoreAsync(string playerId)
-        {
-            return await _nationalRankingDb.GetHighScoreAsIntAsyncById(playerId);
-        }
-
         public async Task<List<PlayerRankingDTO>> GetTopWeeklyScoresAsync(int count)
         {
             return await _weeklyRankingDb.GetTopRanksAsync(count);
-        }
-
-        public async Task<List<PlayerRankingDTO>> GetTopNationalScoresAsync(int count)
-        {
-            return await _nationalRankingDb.GetTopRanksAsync(count);
         }
 
         public async Task<List<PlayerRankingDTO>> GetSurroundingWeeklyScoresByIdAsync(string playerId, int range)

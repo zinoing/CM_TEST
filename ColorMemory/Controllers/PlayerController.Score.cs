@@ -23,20 +23,11 @@ namespace ColorMemory.Controllers
             }
         }
 
-        [HttpPost("score/national/update")]
-        public async Task<IActionResult> UpdateNationalScoreAsync([FromBody] ScoreDTO scoreInfo)
+        [HttpGet("{playerId}/score/high")]
+        public async Task<IActionResult> GetPlayerHighScoreAsync(string playerId)
         {
-            try
-            {
-                var result = await _scoreService.UpdateNationalScoreAsync(scoreInfo);
-                _logger.LogInformation($"updated {scoreInfo.PlayerId}'s national score");
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error updating score");
-                return StatusCode(500, new { error = ex.Message });
-            }
+            var score = await _scoreService.GetHighScoreAsync(playerId);
+            return Ok(score);
         }
 
         [HttpGet("{playerId}/score/weekly")]
@@ -52,13 +43,6 @@ namespace ColorMemory.Controllers
                 var playerScore = await _scoreService.GetWeeklyScoreAsDTOAsync(playerId);
                 return Ok(playerScore);
             }
-        }
-
-        [HttpGet("{playerId}/score/national")]
-        public async Task<IActionResult> GetPlayerNationalScoreAsync(string playerId)
-        {
-            var scores = await _scoreService.GetNationalScoreAsync(playerId);
-            return Ok(scores);
         }
 
         [HttpGet("{playerId}/score/weekly/surrounding/{range}")]

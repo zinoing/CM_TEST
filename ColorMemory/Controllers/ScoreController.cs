@@ -30,12 +30,5 @@ namespace ColorMemory.Controllers
             var scores = await _scoreService.GetTopWeeklyScoresAsync(count);
             return Ok(scores);
         }
-
-        [HttpGet("national/{count}")]
-        public async Task<IActionResult> GetTopNationalScoresAsync(int count)
-        {
-            var scores = await _scoreService.GetTopNationalScoresAsync(count);
-            return Ok(scores);
-        }
     }
 }

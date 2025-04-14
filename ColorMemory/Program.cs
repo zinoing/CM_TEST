@@ -16,7 +16,6 @@ builder.Host.ConfigureHostOptions(options =>
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddScoped<NationalRankingDb>();
 builder.Services.AddScoped<WeeklyRankingDb>();
 builder.Services.AddScoped<PlayerDb>();
 

@@ -191,8 +191,8 @@
   },
   {
     "ContainingType": "ColorMemory.Controllers.PlayerController",
-    "Method": "GetPlayerNationalScoreAsync",
-    "RelativePath": "api/player/{playerId}/score/national",
+    "Method": "GetPlayerHighScoreAsync",
+    "RelativePath": "api/player/{playerId}/score/high",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -318,22 +318,6 @@
   },
   {
     "ContainingType": "ColorMemory.Controllers.PlayerController",
-    "Method": "UpdateNationalScoreAsync",
-    "RelativePath": "api/player/score/national/update",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "scoreInfo",
-        "Type": "ColorMemory.DTO.ScoreDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ColorMemory.Controllers.PlayerController",
     "Method": "UpdateWeeklyScoreAsync",
     "RelativePath": "api/player/score/weekly/update",
     "HttpMethod": "POST",
@@ -343,22 +327,6 @@
       {
         "Name": "scoreInfo",
         "Type": "ColorMemory.DTO.ScoreDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ColorMemory.Controllers.ScoreController",
-    "Method": "GetTopNationalScoresAsync",
-    "RelativePath": "api/score/national/{count}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "count",
-        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

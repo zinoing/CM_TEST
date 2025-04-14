@@ -28,9 +28,14 @@ public class WeeklyResetService : IHostedService, IDisposable
 
     private DateTime GetNextMondayMidnight()
     {
-        var today = DateTime.Today;
+        var today = DateTime.Now;
         int daysUntilMonday = ((int)DayOfWeek.Monday - (int)today.DayOfWeek + 7) % 7;
-        return today.AddDays(daysUntilMonday).AddHours(0);
+
+        if (daysUntilMonday == 0 && today.TimeOfDay >= TimeSpan.Zero)
+            daysUntilMonday = 7;
+
+        var nextMonday = today.Date.AddDays(daysUntilMonday);
+        return nextMonday;
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
