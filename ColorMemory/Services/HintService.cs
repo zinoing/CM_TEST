@@ -9,24 +9,18 @@ namespace ColorMemory.Services
     public class HintService
     {
         private readonly PlayerDb _playerDb;
+        private readonly HintDb _hintDb;
         private readonly MoneyService _moneyService;
-        public HintService(PlayerDb playerDb, MoneyService moneyService)
+        public HintService(PlayerDb playerDb, HintDb hintDb, MoneyService moneyService)
         {
             _playerDb = playerDb;
+            _hintDb = hintDb;
             _moneyService = moneyService;
         }
 
-        public int GetHintPrice(HintType type)
+        public async Task<int> GetHintPriceAsync(HintType type)
         {
-            switch (type)
-            {
-                case HintType.OneColorHint:
-                    return 100;
-                case HintType.OneZoneHint:
-                    return 50;
-                default:
-                    return -1;
-            }
+            return await _hintDb.GetHintPriceAsync(type);
         }
 
         public async Task<bool> BuyPlayerHintAsync(HintDTO hintInfo)

@@ -18,6 +18,7 @@ builder.Host.ConfigureHostOptions(options =>
 builder.Services.AddControllers();
 builder.Services.AddScoped<WeeklyRankingDb>();
 builder.Services.AddScoped<PlayerDb>();
+builder.Services.AddScoped<HintDb>();
 
 builder.Services.AddScoped<PlayerService>();
 builder.Services.AddScoped<ScoreService>();

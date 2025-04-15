@@ -63,6 +63,14 @@ namespace ColorMemory.Data
         public DateTime? ObtainedDate { get; set; }
     }
 
+    public class Hint
+    {
+        [Required]
+        public HintType HintType { get; set; }
+
+        public int Price { get; set; }
+    }
+
     public class GameDbContext : DbContext
     {
         public GameDbContext(DbContextOptions<GameDbContext> options)
@@ -72,6 +80,7 @@ namespace ColorMemory.Data
         public DbSet<Player> Players { get; set; }
         public DbSet<Artwork> Artworks { get; set; }
         public DbSet<PlayerArtwork> PlayerArtworks { get; set; }
+        public DbSet<Hint> Hints { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -127,6 +136,15 @@ namespace ColorMemory.Data
                       .IsRequired(false)
                       .HasDefaultValueSql(null);
             });
+
+            modelBuilder.Entity<Hint>(entity =>
+            {
+                entity.HasKey(h => h.HintType);
+
+                entity.Property(h => h.Price)
+                      .HasDefaultValue(0);
+            });
+
         }
     }
 }

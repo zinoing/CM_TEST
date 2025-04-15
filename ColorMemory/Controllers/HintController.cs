@@ -21,7 +21,7 @@ namespace ColorMemory.Controllers
         [HttpGet("price")]
         public async Task<IActionResult> GetHintPriceAsync([FromQuery] HintType type)
         {
-            int price = _hintService.GetHintPrice(type);
+            int price = await _hintService.GetHintPriceAsync(type);
             return Ok(price);
         }
     }
