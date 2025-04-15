@@ -26,18 +26,17 @@ namespace ColorMemory.Services
         public async Task<bool> BuyPlayerHintAsync(HintDTO hintInfo)
         {
             bool result = false;
-            if (hintInfo.Type == HintType.OneZoneHint)
+            int hintPrice = await GetHintPriceAsync(hintInfo.Type);
+            int playerMoney = (await _playerDb.GetPlayerAsync(hintInfo.PlayerId)).Money;
+
+            if (hintPrice > playerMoney)
             {
-                // 검증 단계 필요
-                // 재화 사용 단계 필요
-                result = await _moneyService.PayPlayerMoneyAsync(hintInfo.PlayerId, 50);
+                return false;
             }
-            else
-            {
-                // 검증 단계 필요
-                // 재화 사용 단계 필요
-                result = await _moneyService.PayPlayerMoneyAsync(hintInfo.PlayerId, 100);
-            }
+
+            // 검증 단계 필요
+            // 재화 사용 단계 필요
+            result = await _moneyService.PayPlayerMoneyAsync(hintInfo.PlayerId, hintPrice);
 
             return result;
         }
