@@ -70,6 +70,22 @@
   },
   {
     "ContainingType": "ColorMemory.Controllers.PlayerController",
+    "Method": "DeletePlayerAsync",
+    "RelativePath": "api/player/{playerId}/delete",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playerId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ColorMemory.Controllers.PlayerController",
     "Method": "GetPlayerIconIdAsync",
     "RelativePath": "api/player/{playerId}/icon",
     "HttpMethod": "GET",

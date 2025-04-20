@@ -54,6 +54,30 @@ namespace ColorMemory.Controllers
             }
         }
 
+        [HttpPost("{playerId}/delete")]
+        public async Task<IActionResult> DeletePlayerAsync(string playerId)
+        {
+            try
+            {
+                var result = await _playerService.DeletePlayerAsync(playerId);
+
+                if (result == false)
+                {
+                    _logger.LogWarning($"Player {playerId} doesn't exists or could not be deleted.");
+                    return Ok(false);
+                }
+
+                _logger.LogInformation($"Deleted player {playerId} from DB");
+
+                return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error deleting player {playerId}");
+                return StatusCode(500, new { error = ex.Message });
+            }
+        }
+
         [HttpGet("{playerId}/money")]
         public async Task<int> GetPlayerMoneyAsync(string playerId)
         {

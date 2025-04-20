@@ -19,6 +19,13 @@ namespace ColorMemory.Services
             return player;
         }
 
+        public async Task<bool> DeletePlayerAsync(string playerId)
+        {
+            var result = await _playerDb.DeletePlayerAsync(playerId);
+
+            return result;
+        }
+
         public async Task<Player> GetPlayerInfo(string playerId)
         {
             var player = await _playerDb.GetPlayerAsync(playerId);

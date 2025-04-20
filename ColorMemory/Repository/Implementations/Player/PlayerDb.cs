@@ -121,6 +121,27 @@ namespace ColorMemory.Repository.Implementations
             return playerFromDb;
         }
 
+        public async Task<bool> DeletePlayerAsync(string playerId)
+        {
+            var player = await FindPlayerAsync(playerId);
+            if (player == null)
+            {
+                return false;
+            }
+
+            var playerArtworks = _context.PlayerArtworks.Where(pa => pa.PlayerId == playerId).ToList();
+            _context.PlayerArtworks.RemoveRange(playerArtworks);
+
+            _context.Players.Remove(player);
+
+            await _context.SaveChangesAsync();
+
+            string redisKey = $"player:{playerId}";
+            await _database.SortedSetRemoveAsync("weekly_rankings", playerId);
+
+            return true;
+        }
+
         // get functions
         public async Task<Player> GetPlayerAsync(string playerId)
         {
