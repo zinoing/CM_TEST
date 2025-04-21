@@ -93,7 +93,7 @@ namespace ColorMemory.Repository.Implementations
             return playerScores;
         }
 
-        public async Task<List<List<PlayerRankingDTO>>> GetSurroundingWeeklyScoresByScoreAsync(int score, int range)
+        public async Task<List<PlayerRankingDTO>> GetSurroundingWeeklyScoresByScoreAsync(int score, int range)
         {
             long countAbove = await _database.SortedSetLengthAsync(_key, score, double.PositiveInfinity, Exclude.Start);
             long currentRank = countAbove + 1;
@@ -110,8 +110,7 @@ namespace ColorMemory.Repository.Implementations
                 Order.Descending
             );
 
-            List<PlayerRankingDTO> abovePlayerScores = new List<PlayerRankingDTO>();
-            List<PlayerRankingDTO> underPlayerScores = new List<PlayerRankingDTO>();
+            List<PlayerRankingDTO> playerScores = new List<PlayerRankingDTO>();
 
             foreach (var scoreEntry in scores)
             {
@@ -119,22 +118,10 @@ namespace ColorMemory.Repository.Implementations
                 int playerScore = (int)scoreEntry.Score;
                 string name = await _playerDb.GetNameAsync(playerId);
                 int iconId = await _playerDb.GetIconIdAsync(playerId);
-                int rank = await GetRankingAsIntAsyncById(playerId);
+                int ranking = await GetRankingAsIntAsyncById(playerId);
 
-                if(playerScore <= score)
-                {
-                    rank += 1;
-                    underPlayerScores.Add(new PlayerRankingDTO(playerId, playerScore, name, iconId, rank));
-                }
-                else
-                {
-                    abovePlayerScores.Add(new PlayerRankingDTO(playerId, playerScore, name, iconId, rank));
-                }
+                playerScores.Add(new PlayerRankingDTO(playerId, playerScore, name, iconId, ranking));
             }
-
-            List<List<PlayerRankingDTO>> playerScores = new List<List<PlayerRankingDTO>>();
-            playerScores.Add(abovePlayerScores);
-            playerScores.Add(underPlayerScores);
 
             return playerScores;
         }

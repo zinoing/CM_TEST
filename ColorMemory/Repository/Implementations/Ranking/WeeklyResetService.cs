@@ -13,6 +13,7 @@ public class WeeklyResetService : IHostedService, IDisposable
     public Task StartAsync(CancellationToken cancellationToken)
     {
         var nextResetTime = GetNextMondayMidnight();
+        //var nextResetTime = GetNextMinutes(1);
         var delay = nextResetTime - DateTime.Now;
 
         _timer = new Timer(ResetRanking, null, delay, TimeSpan.FromDays(7));
@@ -37,6 +38,13 @@ public class WeeklyResetService : IHostedService, IDisposable
         var nextMonday = today.Date.AddDays(daysUntilMonday);
         return nextMonday;
     }
+
+    private DateTime GetNextMinutes(int minutes)
+    {
+        var today = DateTime.Now;
+        return today.AddMinutes(minutes);
+    }
+
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
