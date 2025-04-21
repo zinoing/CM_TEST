@@ -24,10 +24,9 @@ namespace ColorMemory.Repository.Implementations
             var playerId = scoreInfo.PlayerId;
             var newScore = scoreInfo.Score;
 
-            var previousScore = await _playerDb.GetScoreAsync(playerId);
-            if (previousScore == -1) return false;
+            var previousScore = await GetHighScoreAsIntAsyncById(playerId);
 
-            if (previousScore <= newScore)
+            if (previousScore == 0 || previousScore <= newScore)
             {
                 await _database.SortedSetAddAsync(_key, playerId, newScore);
             }
