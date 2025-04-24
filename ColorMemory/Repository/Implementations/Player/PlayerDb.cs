@@ -123,7 +123,7 @@ namespace ColorMemory.Repository.Implementations
 
         public async Task<bool> DeletePlayerAsync(string playerId)
         {
-            var player = await FindPlayerInRDSAsync(playerId);
+            var player = await FindPlayerAsync(playerId);
             if (player == null)
             {
                 return false;
@@ -138,6 +138,7 @@ namespace ColorMemory.Repository.Implementations
 
             string redisKey = $"player:{playerId}";
             await _database.SortedSetRemoveAsync("weekly_rankings", playerId);
+            await _database.KeyDeleteAsync(redisKey);
 
             return true;
         }
