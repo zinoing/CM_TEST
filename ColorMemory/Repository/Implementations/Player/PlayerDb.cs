@@ -123,7 +123,7 @@ namespace ColorMemory.Repository.Implementations
 
         public async Task<bool> DeletePlayerAsync(string playerId)
         {
-            var player = await FindPlayerAsync(playerId);
+            var player = await FindPlayerInRDSAsync(playerId);
             if (player == null)
             {
                 return false;
